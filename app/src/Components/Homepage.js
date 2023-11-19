@@ -11,12 +11,16 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { useRef, Component } from 'react'
-import { tablify, parse_bool } from "../App";
-import { Navigate, useNavigate } from 'react-router-dom';
-import { mainListItems, secondaryListItems } from './ListItems';
+import App, { tablify, parse_bool, theme } from "../App";
+import { Navigate, useNavigate} from 'react-router-dom';
+import Navbar from './ListItems';
+import { mainListItems} from './ListItems';
+import List from '@mui/material/List';
+import AppBar from '@mui/material/AppBar';
+import "../styles.css"
 
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
     return (
@@ -30,6 +34,7 @@ function Copyright(props) {
         </Typography>
     );
 }
+
 
 
 
@@ -95,11 +100,36 @@ export default function Homepage() {
         });
     };
 
+/*
+    <AppBar
+        sx={{
+            background: "MediumAquaMarine",
+            height: "5%",
+            alignContent: "middle",
+            display: "flex",
+            alignItems: "left",
+            justifyContent: "left",
+            verticalAlign: "bottom"
+
+        }}>
+        */
+
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <mainListItems>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+
                 
-            </mainListItems>
+                    <Navbar/>
+
+                <Grid className='background-grid'>
+                    Users
+                </Grid>
+
+
+
+
+
+
 
 
         </ThemeProvider>

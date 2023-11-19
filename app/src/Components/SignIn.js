@@ -47,7 +47,7 @@ export default function SignInSide() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    let nav = useNavigate();
+    var nav = useNavigate();
 
     const getUsername = (event) => {
         setUsername(event.target.value);
@@ -80,7 +80,7 @@ export default function SignInSide() {
         
     }
 
-    
+
 
     const fieldRef = useRef("Hello, World!")
 
@@ -108,7 +108,7 @@ export default function SignInSide() {
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
+                        backgroundSize: 'cover',  
                         backgroundPosition: 'center',
                     }}
                 />

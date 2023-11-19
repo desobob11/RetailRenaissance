@@ -6,9 +6,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
 import UsersPage from './Components/Users';
 import Homepage from './Components/Homepage';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 const defaultTheme = createTheme();
+
 
 /**
  * This functio assumes that the result set is from a stored procedure call. This means
@@ -44,6 +45,15 @@ export function tablify(resultset) {
   console.log(arr);
 }
 
+export const theme = createTheme({
+  palette: {
+    background:{
+      default:"lavender"
+    }
+  }
+
+
+})
 
 export function parse_bool(response) {
   try {
