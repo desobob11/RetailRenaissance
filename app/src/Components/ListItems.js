@@ -132,7 +132,7 @@ export default function Navbar() {
             display: "flex",
             flexDirection: "row",
             background: "White",
-            boxShadow:4,
+            boxShadow:1,
             height:"10vh"
         }}
     >

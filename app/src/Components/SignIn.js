@@ -71,7 +71,7 @@ export default function SignInSide() {
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
             let login_flag = result["result"][0]["@result"];
             if (login_flag == 1) {
-                nav("/users");
+                nav("/homepage");
             }
             else {
                 alert("Invalid Credentials");

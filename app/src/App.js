@@ -28,13 +28,13 @@ export var login_name = "";
 export function tablify(resultset) {
   let arr = [];
   let row = [];
-  Object.keys(resultset[0][0]).forEach((x) => {
+  Object.keys(resultset["result"][0]).forEach((x) => {
     row.push(x);
   })
   arr.push(row);
   row = [];
 
-  resultset[0].forEach((x) => {
+  resultset["result"].forEach((x) => {
     Object.values(x).forEach((y) => {
       row.push(y);
     })
@@ -42,7 +42,7 @@ export function tablify(resultset) {
     row = [];
   })
 
-  console.log(arr);
+  return arr;
 }
 
 export const theme = createTheme({
@@ -77,7 +77,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SignInSide />} />
           <Route path="/users" element={<UsersPage />} />
-          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/homepage"  element={<Homepage />} />
         </Routes>
       </Router>
     </ThemeProvider>

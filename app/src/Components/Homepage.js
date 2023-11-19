@@ -1,26 +1,18 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useState, useEffect, setState } from "react";
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { useRef, Component } from 'react'
 import App, { tablify, parse_bool, theme } from "../App";
-import { Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './ListItems';
-import { mainListItems} from './ListItems';
-import List from '@mui/material/List';
-import AppBar from '@mui/material/AppBar';
 import "../styles.css"
+import Table from '@mui/material/Table';
 
 import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
+import { TableBody, TableHead, TableRow } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+
 
 function Copyright(props) {
     return (
@@ -50,55 +42,27 @@ export default function Homepage() {
 
 
 
+    const [userTable, setUserTable] = useState("");
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    let nav = useNavigate();
+    useEffect(() => {
+      //  alert(JSON.stringify(userTable));
+      //  if (userTable == "") {
+       //     get_user_data();
+       // }
+    }, [userTable]);
 
-    const getUsername = (event) => {
-        setUsername(event.target.value);
-    }
-
-    const getPassword = (event) => {
-        setPassword(event.target.value);
-    }
-
-    const [serverResponse, setServerResponse] = useState({});
-
-
-
-    const sendLogin = (event) => {
-        let paramString = `request_login;;;('${username}','${password}')`;
+    const get_user_data = (event) => {
+        let paramString = `user_summary;;;()`;
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
             body: paramString,
         };
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
-            let login_flag = result["result"][0]["@result"];
-            if (login_flag == 1) {
-                nav("/users");
-            }
-            else {
-                alert("Invalid Credentials");
-            }
+            setUserTable(tablify(result));
         });
 
     }
-
-
-
-    const fieldRef = useRef("Hello, World!")
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
 
 /*
     <AppBar
@@ -114,6 +78,8 @@ export default function Homepage() {
         }}>
         */
 
+    let heading = ["one", "two"];
+    let body = [[1, 2]];
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -123,6 +89,8 @@ export default function Homepage() {
 
                 <Grid className='background-grid'>
                     Users
+
+        
                 </Grid>
 
 
