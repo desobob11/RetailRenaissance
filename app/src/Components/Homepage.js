@@ -78,20 +78,40 @@ export default function Homepage() {
         }}>
         */
 
-    let heading = ["one", "two"];
-    let body = [[1, 2]];
+    let heading = [{field: "Header"}];
+    let body = [
+        {id: 1, Header: "Hello"},
+    { id: 2, Header: "Hello" }
+    ];
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
 
                 
                     <Navbar/>
 
-                <Grid className='background-grid'>
+                <Grid className='background-grid' sx={{
+                    alignContent:"center",
+                    justifyContent:"center"
+                }}>
                     Users
 
-        
+
+                <DataGrid columns={heading} rows={body} sx={{
+                    width: "80%",
+                    height: "50vh"
+                    
+
+
+                }}>
+                </DataGrid>
                 </Grid>
+
+
+ 
+
+
 
 
 
