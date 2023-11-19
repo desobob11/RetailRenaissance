@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
 import UsersPage from './Components/Users';
+import Homepage from './Components/Homepage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 const defaultTheme = createTheme();
@@ -17,7 +18,13 @@ const defaultTheme = createTheme();
  * @param {
  * } resultset 
  */
-function tablify(resultset) {
+
+export var login_name = "";
+//export login_name;
+
+
+
+export function tablify(resultset) {
   let arr = [];
   let row = [];
   Object.keys(resultset[0][0]).forEach((x) => {
@@ -37,6 +44,17 @@ function tablify(resultset) {
   console.log(arr);
 }
 
+
+export function parse_bool(response) {
+  try {
+    return response["@result"];
+  }
+  // server response not received
+  catch (error) {
+    return -1;
+  }
+}
+
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -49,6 +67,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SignInSide />} />
           <Route path="/users" element={<UsersPage />} />
+          <Route path="/homepage" element={<Homepage />} />
         </Routes>
       </Router>
     </ThemeProvider>
@@ -56,3 +75,4 @@ function App() {
 }
 
 export default App;
+
