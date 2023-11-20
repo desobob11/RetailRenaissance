@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useState, useEffect, setState } from "react";
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import App, { tablify, parse_bool, theme } from "../App";
+import App, { tablify, parse_bool, theme, get_columns} from "../App";
 import Navbar from './ListItems';
 import "../styles.css"
 import Table from '@mui/material/Table';
@@ -42,14 +42,18 @@ export default function Homepage() {
 
 
 
-    const [userTable, setUserTable] = useState("");
+    const [userRows, setUserRows] = useState([]);
+    const [userCols, setUserCols] = useState([]);
 
     useEffect(() => {
-      //  alert(JSON.stringify(userTable));
-      //  if (userTable == "") {
-       //     get_user_data();
-       // }
-    }, [userTable]);
+
+        if (userRows.length == 0) {
+            get_user_data();
+        }
+        if (userCols.length == 0) {
+
+        }
+    }, [userRows, userCols]);
 
     const get_user_data = (event) => {
         let paramString = `user_summary;;;()`;
@@ -59,33 +63,21 @@ export default function Homepage() {
             body: paramString,
         };
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
-            setUserTable(tablify(result));
+            setUserRows(result["result"]);
+            setUserCols(get_columns(result["result"]));
         });
 
     }
 
-/*
-    <AppBar
-        sx={{
-            background: "MediumAquaMarine",
-            height: "5%",
-            alignContent: "middle",
-            display: "flex",
-            alignItems: "left",
-            justifyContent: "left",
-            verticalAlign: "bottom"
 
-        }}>
-        */
+    const rowStyle = (record, index) => ({
 
-    let heading = [{field: "Header"}];
-    let body = [
-        {id: 1, Header: "Hello"},
-    { id: 2, Header: "Hello" }
-    ];
+
+    })
+
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={theme}>
             <CssBaseline />
 
                 
@@ -98,28 +90,26 @@ export default function Homepage() {
                     Users
 
 
-                <DataGrid columns={heading} rows={body} sx={{
-                    width: "80%",
-                    height: "50vh"
-                    
-
-
-                }}>
+                <DataGrid 
+                columns={userCols} 
+                rows={userRows} 
+                getRowId={(row)=> row.ID} 
+                sx={{
+                    width: "85%",
+                    height: "60vh",
+                    background:"white",
+                    fontFamily:"Calibri"
+                }}
+                onRowSelectionModelChange={(id) => {
+                    let record = userRows.filter((x) => {
+                        return x.ID == id;
+                    })
+                    alert(JSON.stringify(record));
+                }}
+                
+                >
                 </DataGrid>
                 </Grid>
-
-
- 
-
-
-
-
-
-
-
-
-
-
         </ThemeProvider>
 
 

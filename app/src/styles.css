@@ -7,7 +7,7 @@
 .icon {
   color:dodgerblue;
   font-size: large;
-  padding: 0%;
+  margin: 0;
     
 }
 
@@ -25,5 +25,6 @@
     font-weight: bold;
     margin-left: 10%;
     margin-top: 5%;
+
 
 }

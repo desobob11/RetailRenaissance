@@ -23,7 +23,13 @@ const defaultTheme = createTheme();
 export var login_name = "";
 //export login_name;
 
-
+export function get_columns(table) {
+  let cols = [];
+  Object.keys(table[0]).forEach((x) => {
+    cols.push({field:x, flex:1});
+  })
+  return cols;
+}
 
 export function tablify(resultset) {
   let arr = [];
@@ -48,7 +54,7 @@ export function tablify(resultset) {
 export const theme = createTheme({
   palette: {
     background:{
-      default:"lavender"
+      default:"#f0f0f0"
     }
   }
 
