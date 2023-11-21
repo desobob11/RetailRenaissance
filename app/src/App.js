@@ -23,6 +23,9 @@ const defaultTheme = createTheme();
 export var login_name = "";
 //export login_name;
 
+export var logged_in = false;
+export var username = "";
+
 export function get_columns(table) {
   let cols = [];
   Object.keys(table[0]).forEach((x) => {
