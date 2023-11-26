@@ -10,8 +10,9 @@ n_branch = 15
 n_user = 500
 n_customer = 10000
 n_supplier = 10
-n_trans = 100
+n_trans = 20000
 n_products = 100
+n_shipment = 500
 
 
 def gen_customers(db, curs, n: int) -> None:
@@ -151,7 +152,6 @@ def gen_transactions(db, curs, n):
     statuses = ["Complete", "Pending", "Cancelled"]
     prod_table = query(curs, "SELECT * FROM PRODUCT;")
     for i in range(n):
-        print(i)
 
 
 
@@ -186,13 +186,53 @@ def gen_transactions(db, curs, n):
         for j in range(num_unique_prods):
             price = prod_table[prod_table["product_id"] == prods[j]]["price"].values[0]
             amount += price * n_prods[j]
-            update = "UPDATE `TRANSACTION` SET amount=%s WHERE transaction_id=%d;" % (i + 1, price * n_prods[j])
-            curs.execute(update)
             insert_requires = "INSERT INTO `REQUIRES` (transaction_id, product_id, num_prods) VALUES (%d, %d, %d);" %  (i + 1, prods[j], n_prods[j])
             curs.execute(insert_requires)
 
         update = "UPDATE `TRANSACTION` SET amount=%s WHERE transaction_id=%d;" % (amount, i + 1)
         curs.execute(update)
+
+
+    db.commit()
+
+
+def gen_shipments(db, curs, n):
+    print("Shipments...")
+    fk = Faker(["en_CA"])
+    dt_start = datetime.datetime(2000, 1, 1)
+    dt_end = datetime.datetime.now()
+    for i in range(n):
+        n_managers = query(curs, "SELECT COUNT(*) FROM MANAGER;").values[0][0]
+
+
+        ship_date = fk.date_between_dates(date_start=dt_start, date_end=dt_end)
+        arr_date = fk.date_between_dates(date_start=ship_date, date_end=dt_end)
+        user = random.randint(1, n_managers)
+        warehouse = random.randint(1, n_warehouse)
+        supplier = random.randint(1, n_supplier)
+        insert_ship = "INSERT INTO SHIPMENT (shipment_id, ship_date, arrival_date, user_id, warehouse_id) VALUES (%d, '%s', '%s', %s, %s);"% (i + 1, ship_date, arr_date, user, warehouse)
+        curs.execute(insert_ship)
+
+        insert_supplies = "INSERT INTO SUPPLIES (supplier_id, shipment_id) VALUES (%d, %d);" %  (supplier, i + 1)
+        curs.execute(insert_supplies)
+
+    
+        num_unique_prods = random.randint(1, 10)
+        prods = []
+        n_prods = []
+
+        # get products to buy
+        while len(prods) < num_unique_prods:
+            prod_id = random.randint(1, n_products)
+            if prod_id not in prods:
+                prods.append(prod_id)
+
+        while len(n_prods) < num_unique_prods:
+            n_prods.append(random.randint(1, 10))
+
+        for j in range(num_unique_prods):
+            insert_contains = "INSERT INTO CONTAINS (product_id, shipment_id, num_prod) VALUES (%d, %d, %d);" %  (prods[j], i + 1, n_prods[j])
+            curs.execute(insert_contains)
 
 
     db.commit()
@@ -224,13 +264,15 @@ def main():
     curs = db.cursor()
 
     
-    #gen_customers(db, curs, n_customer)
-    #gen_warehouses(db, curs, n_warehouse)
-    #gen_branch(db, curs, n_branch)
-    #gen_user(db, curs, n_user)
-    #gen_product(db, curs, 0)
-    #gen_supplier(db, curs, n_supplier)
-    gen_transactions(db, curs, 1)
+    gen_customers(db, curs, n_customer)
+    gen_warehouses(db, curs, n_warehouse)
+    gen_branch(db, curs, n_branch)
+    gen_user(db, curs, n_user)
+    gen_product(db, curs, 0)
+    gen_supplier(db, curs, n_supplier)
+    gen_transactions(db, curs, n_trans)
+    gen_shipments(db, curs, n_shipment)
+
 
 
 
