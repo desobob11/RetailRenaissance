@@ -8,6 +8,8 @@ import UsersPage from './Components/Users';
 import Homepage from './Components/Homepage';
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Reports from './Components/Reports';
+
 const defaultTheme = createTheme();
 
 
@@ -87,6 +89,7 @@ function App() {
           <Route path="/" element={<SignInSide />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/homepage"  element={<Homepage />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </Router>
     </ThemeProvider>

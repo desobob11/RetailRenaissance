@@ -27,7 +27,7 @@ SELECT EXISTS (SELECT 1
 -- Best selling products
 ;WITH sales AS (
 SELECT 
-    product_name `Product`, 
+    product_name `Prod6uct`, 
     num_stock `Total Order`, 
     price `Price`,
     num_sales = (SELECT COUNT(product_id)
@@ -37,6 +37,21 @@ SELECT
     FROM PRODUCT P)
 SELECT * FROM sales ORDER BY num_sales DESC
 
+
+-- Trending products
+
+
+;WITH sales AS (
+SELECT 
+    product_name `Product`, 
+    num_stock `Total Order`, 
+    price `Price`,
+    num_sales = (SELECT SUM(num_prods)
+                FROM REQUIRES R
+                WHERE R.product_id = P.product_id)
+
+    FROM PRODUCT P)
+SELECT * FROM sales ORDER BY num_sales DESC
 
 
 
