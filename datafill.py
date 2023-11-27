@@ -5,6 +5,10 @@ import datetime
 import pandas as pd
 import numpy as np
 
+
+# YOU NEED THE ABOVE PACKAGES TO USE THIS SCRIPT
+# YOU ALSO NEED products.txt IN SAME DIRECTORY
+
 n_warehouse = 10
 n_branch = 15
 n_user = 500

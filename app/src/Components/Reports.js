@@ -41,10 +41,95 @@ const defaultTheme = createTheme();
 
 export default function Reports() {
 
+    const [countOrders, setCountOrders] = useState("");
+    const [sumOrders, setSumOrders] = useState("");
 
-    const _cols = [{field: "Name"},
-                    {field: "ID"}]
-    const _rows = [{"Name": "Hello", "ID": 1}]
+    const [bestSellingRows, setBestSellingRows] = useState([]);
+    const [bestSellingCols, setBestSellingCols] = useState([]);
+
+    const [trendingRows, setTrendingRows] = useState([]);
+    const [trendingCols, setTrendingCols] = useState([]);
+    const [latestRows, setLatestRows] = useState([]);
+    const [latestCols, setLatestCols] = useState([]);
+
+    const get_best_selling = (event) => {
+        let paramString = `REPORTS_bestselling_products;;;()`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setBestSellingRows(result["result"]);
+            setBestSellingCols(get_columns(result["result"]));
+        });
+
+    }
+    const get_trending = (event) => {
+        let paramString = `REPORTS_trending_products;;;()`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setTrendingRows(result["result"]);
+            setTrendingCols(get_columns(result["result"]));
+        });
+
+    }
+    
+    const get_latest = (event) => {
+        let paramString = `REPORTS_latest_transactions;;;()`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setLatestRows(result["result"]);
+            setLatestCols(get_columns(result["result"]));
+        });
+
+    }
+
+    const get_summary = (event) => {
+        let paramString = `REPORTS_sum_orders;;;()`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setSumOrders(result["result"][0]["@result"]);
+        });
+        paramString = `REPORTS_count_orders;;;()`;
+        options["body"] = paramString;
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setCountOrders(result["result"][0]["@result"]);
+        });
+
+        
+
+    }
+
+    useEffect(() => {
+        if (bestSellingRows.length == 0) {
+            get_best_selling();
+        }
+        if (bestSellingCols.length == 0) {
+            get_trending();
+        }
+        if (latestCols.length == 0) {
+            get_latest();
+        }
+        if (sumOrders == "") {
+            get_summary();
+        }
+
+        }, [bestSellingRows, trendingRows, latestCols, sumOrders]);
+
+
 
 
 
@@ -65,9 +150,9 @@ export default function Reports() {
           
 
             <Grid item marginTop="2vh">
-                <DataGrid
-                    columns={_cols}
-                    rows={_rows}
+                <DataGrid name="bestSelling"
+                    columns={bestSellingCols}
+                    rows={bestSellingRows}
                     getRowId={(row) => row.ID}
                     sx={{
                         width: "80vw",
@@ -89,6 +174,9 @@ export default function Reports() {
                 >
                 </DataGrid>
             </Grid>
+                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+                    Best-Selling Product, Transactions YTD
+                </Typography>
                 <Box sx={{
                     width: "80vw",
                     height: "60vh",
@@ -122,12 +210,12 @@ export default function Reports() {
                     </Typography>
                 </Grid>
             <Grid item>
-                <DataGrid
-                    columns={_cols}
-                    rows={_rows}
+                <DataGrid name="trending"
+                    columns={trendingCols}
+                    rows={trendingRows}
                     getRowId={(row) => row.ID}
                     sx={{
-                        width: "20vw",
+                        width: "30vw",
                         height: "30vh",
                         background: "white",
                         fontFamily: "Calibri",
@@ -147,12 +235,12 @@ export default function Reports() {
                 </DataGrid>
                    </Grid>
                 <Grid item>
-                                <DataGrid
-                    columns={_cols}
-                    rows={_rows}
+                                <DataGrid name="Latest"
+                    columns={latestCols}
+                    rows={latestRows}
                     getRowId={(row) => row.ID}
                     sx={{
-                        width: "40vw",
+                        width: "30vw",
                         height: "30vh",
                         background: "white",
                         fontFamily: "Calibri",
@@ -171,35 +259,28 @@ export default function Reports() {
                 >
                 </DataGrid>
             </Grid>
-                <Grid item>
-                    <DataGrid
-                        columns={_cols}
-                        rows={_rows}
-                        getRowId={(row) => row.ID}
-                        sx={{
-                            width: "20vw",
-                            height: "30vh",
-                            background: "white",
-                            fontFamily: "Calibri",
-                            border: "none",
-                            borderRadius: "20px"
-                        }}
-                    /*
-                    onRowSelectionModelChange={(id) => {
-                        let record = userRows.filter((x) => {
-                            return x.ID == id;
-                        })
-                        alert(JSON.stringify(record));
-                    }}
-                    */
-
-                    >
-                    </DataGrid>
-                </Grid>
+            <Grid item>
+                <Box sx={{
+                    backgroundColor:"white",
+                        width: "20vw",
+                        height: "30vh",
+                        display:'table',
+                        borderRadius: "20px",
+                        alignItems:'left',
+                        justifyContent:'left'
+                }}>
+            
+                <Typography variant="h6" marginLeft="20px" marginTop="20px" align='left'>
+                    Sum of sales: {sumOrders}
+                </Typography>
+                <Typography variant="h6" marginLeft="20px" marginTop="20px" align='left'>
+                    Count of sales: {countOrders}
+                </Typography>
+   
+                </Box>
             </Grid>
-            <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
-                Transactions YTD
-            </Typography>
+            </Grid>
+
 
 
         </ThemeProvider>

@@ -1,21 +1,18 @@
 DELIMITER $$
-CREATE PROCEDURE REPROTS_bestselling_products (prod_id INT)
+CREATE PROCEDURE REPORTS_bestselling_products ()
 BEGIN
-
-WITH sales AS (
-SELECT 
-    product_name `Product`, 
-    num_stock `Total Order`, 
-    price `Price`,
-    num_sales = (SELECT SUM(num_prods)
-                FROM REQUIRES R
-                WHERE R.product_id = P.product_id)
-
-    FROM PRODUCT P)
-SELECT * FROM sales ORDER BY num_sales DESC;
-
+SELECT
+	p.product_id `ID`,
+	p.product_name `Name`, 
+    SUM(num_prods) `Total sold`,
+    p.price `Price`,
+	p.num_stock `Current Stock`
+FROM PRODUCT p
+INNER JOIN REQUIRES r
+ON r.product_id = p.product_id
+GROUP BY p.product_name, p.price, p.num_stock, p.product_id
+ORDER BY SUM(num_prods) DESC;
 END
 $$
 DELIMITER ;
-
 
