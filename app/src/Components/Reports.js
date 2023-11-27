@@ -30,7 +30,23 @@ function Copyright(props) {
     );
 }
 
+function get_x_axis(result) {
+    var vals = []
 
+    result.forEach((x) => {
+        vals.push(x["Month"])
+    })
+
+    return vals;
+}
+
+function get_series(result) {
+    var vals = []
+    result.forEach((x) => {
+        vals.push(x["Units Sold"])
+    })
+    return vals;
+}
 
 
 
@@ -41,6 +57,10 @@ const defaultTheme = createTheme();
 
 export default function Reports() {
 
+    const [bestSellingId, setBestSellingId] = useState(1)
+    const [bestSellingName, setBestSellingName] = useState("")
+    const [xAxisData, setxAxisData] = useState([0])
+    const [seriesData, setSeriesData] = useState([0])
     const [countOrders, setCountOrders] = useState("");
     const [sumOrders, setSumOrders] = useState("");
 
@@ -62,6 +82,9 @@ export default function Reports() {
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
             setBestSellingRows(result["result"]);
             setBestSellingCols(get_columns(result["result"]));
+            // set to best seller on default
+          //  setBestSellingId(result["result"][0]["ID"])
+           // setBestSellingName(result["result"][0]["Name"])
         });
 
     }
@@ -108,12 +131,27 @@ export default function Reports() {
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
             setCountOrders(result["result"][0]["@result"]);
         });
+    }
+
+        const get_graph_data = (event) => {
+            let paramString = `REPORTS_line_graph;;;(${bestSellingId})`;
+            const options = {
+                method: "POST",
+                headers: { "Content-Type": "text/plain" },
+                body: paramString,
+            };
+            fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+                setxAxisData(get_x_axis(result["result"]));
+                setSeriesData(get_series(result["result"]));
+            });
+  
 
         
 
     }
 
     useEffect(() => {
+        
         if (bestSellingRows.length == 0) {
             get_best_selling();
         }
@@ -126,8 +164,10 @@ export default function Reports() {
         if (sumOrders == "") {
             get_summary();
         }
+        
 
-        }, [bestSellingRows, trendingRows, latestCols, sumOrders]);
+        get_graph_data();
+        }, [bestSellingName]);
 
 
 
@@ -162,6 +202,13 @@ export default function Reports() {
                         border: "none",
                         borderRadius: "20px"
                     }}
+                    onRowSelectionModelChange={(id) => {
+                        let record = bestSellingRows.filter((x) => {
+                            return x.ID == id;
+                        })
+                        setBestSellingId(record[0]["ID"])
+                        setBestSellingName(record[0]["Name"])
+                    }}
                     /*
                     onRowSelectionModelChange={(id) => {
                         let record = userRows.filter((x) => {
@@ -175,7 +222,7 @@ export default function Reports() {
                 </DataGrid>
             </Grid>
                 <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
-                    Best-Selling Product, Transactions YTD
+                    {bestSellingName}, Monthly Sales YTD
                 </Typography>
                 <Box sx={{
                     width: "80vw",
@@ -184,10 +231,10 @@ export default function Reports() {
 
                 }}>
                     <LineChart
-                        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                        xAxis={[{ data: xAxisData }]}
                         series={[
                             {
-                                data: [2, 5.5, 2, 8.5, 1.5, 5],
+                                data: seriesData,
                             },
                         ]}
 
@@ -196,7 +243,7 @@ export default function Reports() {
                 </Box>
             <Grid item>
                 <Typography variant="h5" marginLeft="6vw" marginTop="1vh">
-                    Trending Products
+                    Trending Products (90 Days)
                 </Typography>
             </Grid>
                 <Grid item>
@@ -206,7 +253,7 @@ export default function Reports() {
                 </Grid>
                 <Grid item>
                     <Typography variant="h5" marginLeft="18vw" marginTop="1vh">
-                        Order Summary (Last 7 Days)
+                        Order Summary (Last 30 Days)
                     </Typography>
                 </Grid>
             <Grid item>
