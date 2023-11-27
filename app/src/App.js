@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
 import UsersPage from './Components/Users';
+import Customers from './Components/Customers'
 import Homepage from './Components/Homepage';
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -87,9 +88,9 @@ function App() {
 
         <Routes>
           <Route path="/" element={<SignInSide />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/homepage"  element={<Homepage />} />
-          <Route path="/reports" element={<Reports />} />
+          <Route path="/users" element={<Homepage />} />
+          <Route path="/homepage"  element={<Reports />} />
+          <Route path="/customers" element={<Customers/>} />
         </Routes>
       </Router>
     </ThemeProvider>
