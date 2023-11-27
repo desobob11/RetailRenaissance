@@ -63,12 +63,12 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/customers">
             <ListItemIcon>
                 <PeopleIcon className="icon" />
             </ListItemIcon >
             <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
+                <Box className="navbar-text"t>
                     Customers
                 </Box>
             </Typography>} />
