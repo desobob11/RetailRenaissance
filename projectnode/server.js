@@ -25,8 +25,8 @@ async function query_db(msg_body, res) {
 
 const con = sql.createConnection({
     host: 'localhost',
-    user: 'dobrien',
-    password: 'abc*123',
+    user: 'root',
+    password: 'Cam1pos2!',
     database: 'rr'
 })
 

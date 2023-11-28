@@ -4,10 +4,9 @@ import { useState, useEffect, setState } from "react";
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import App, { tablify, parse_bool, theme, get_columns } from "../App";
-import Navbar from './ListItems';
+import Navbar from './Navbar';
 import "../styles.css"
 import Table from '@mui/material/Table';
-import { LineChart } from '@mui/x-charts';
 
 import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
