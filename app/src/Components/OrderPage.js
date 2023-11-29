@@ -46,7 +46,7 @@ export default function Orders() {
     useEffect(() => {
 
         if (OrdersRows.length == 0) {
-            get_orders_data();
+            //get_orders_data();
         }
         if (OrdersCols.length == 0) {
 
@@ -57,7 +57,7 @@ export default function Orders() {
 
 
     const get_orders_data = (event) => {
-        let paramString = `orders_summary;;;()`;
+       let paramString = `orders;;;()`; 
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
