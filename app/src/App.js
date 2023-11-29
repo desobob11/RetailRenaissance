@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
-import UsersPage from './Components/Users';
+//import UsersPage from './Components/Users';
 import Customers from './Components/Customers'
 import Homepage from './Components/Homepage';
 import Orders from './Components/OrderPage';
@@ -98,6 +98,8 @@ function App() {
           <Route path="/orders" element={<Orders/>} />
           <Route path="/transactions" element={<Transactions/>} />
           <Route path="/products" element={<Products/>} />
+      
+
 
         </Routes>
       </Router>

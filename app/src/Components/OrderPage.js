@@ -46,7 +46,7 @@ export default function Orders() {
     useEffect(() => {
 
         if (OrdersRows.length == 0) {
-            //get_orders_data();
+            get_orders_data();
         }
         if (OrdersCols.length == 0) {
 
@@ -57,7 +57,7 @@ export default function Orders() {
 
 
     const get_orders_data = (event) => {
-       let paramString = `orders;;;()`; 
+       let paramString = `Order_get_all_data;;;()`; 
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
@@ -97,7 +97,7 @@ export default function Orders() {
                 <DataGrid 
                 columns={OrdersCols} 
                 rows={OrdersRows} 
-                getRowId={(row)=> row.ID} 
+                getRowId={(row) => row.transaction_id} // Use the correct unique identifier property name
                 sx={{
                     width: "85%",
                     height: "60vh",
@@ -119,3 +119,4 @@ export default function Orders() {
 
     );
 }
+
