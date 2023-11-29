@@ -33,7 +33,7 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to= "/Products">
             <ListItemIcon>
                 <ShoppingCartIcon className="icon"  />
             </ListItemIcon>
@@ -53,7 +53,7 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to= "/Transactions">
             <ListItemIcon>
                 <ReceiptIcon className="icon" />
             </ListItemIcon>
