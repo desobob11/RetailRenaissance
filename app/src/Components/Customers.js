@@ -109,6 +109,10 @@ export default function Customers() {
                         //  })
                         //  alert(JSON.stringify(record));
                     }}
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
+                      }}
 
                 >
                 </DataGrid>

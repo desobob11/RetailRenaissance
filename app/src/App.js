@@ -64,7 +64,7 @@ export function tablify(resultset) {
 export const theme = createTheme({
   palette: {
     background:{
-      default:"#f0f0f0"
+      default:"#EFE7EB"
     }
   }
 

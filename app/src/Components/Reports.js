@@ -218,7 +218,10 @@ export default function Reports() {
                         alert(JSON.stringify(record));
                     }}
                     */
-
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
+                      }}
                 >
                 </DataGrid>
             </Grid>
@@ -278,12 +281,15 @@ export default function Reports() {
                     alert(JSON.stringify(record));
                 }}
                 */
-
+                classes={{
+                    columnHeader: 'myGridHeader',
+                    footer: 'myGridFooter',
+                  }}
                 >
                 </DataGrid>
                    </Grid>
                 <Grid item>
-                                <DataGrid name="Latest"
+                 <DataGrid name="Latest"
                     columns={latestCols}
                     rows={latestRows}
                     getRowId={(row) => row.ID}
@@ -305,6 +311,7 @@ export default function Reports() {
                     */
 
                 >
+                    
                 </DataGrid>
             </Grid>
             <Grid item>
