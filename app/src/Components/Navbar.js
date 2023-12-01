@@ -43,16 +43,6 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton component={Link} to= "/Orders">
-            <ListItemIcon>
-                <AttachMoneyIcon className="icon" />
-            </ListItemIcon>
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Orders
-                </Box>
-            </Typography>} />
-        </ListItemButton>
         <ListItemButton component={Link} to= "/Transactions">
             <ListItemIcon>
                 <ReceiptIcon className="icon" />
@@ -90,6 +80,15 @@ export const mainListItems = (
             <ListItemText primary={<Typography component="span">
                 <Box className="navbar-text">
                     Users
+                </Box>
+                </Typography>} />
+        </ListItemButton>
+        <ListItemButton  component={Link} to="/SignInSide">
+            <ListItemIcon>
+            </ListItemIcon >
+            <ListItemText primary={<Typography component="span">
+                <Box className="navbar-text">
+                    Logout
                 </Box>
             </Typography>} />
         </ListItemButton>
