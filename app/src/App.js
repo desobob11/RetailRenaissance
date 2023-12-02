@@ -13,6 +13,7 @@ import Products from './Components/ProductsPage'
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
+import Suppliers from './Components/Suppliers';
 
 const defaultTheme = createTheme();
 
@@ -96,6 +97,7 @@ function App() {
           <Route path="/customers" element={<Customers/>} />
           <Route path="/transactions" element={<Transactions/>} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/suppliers" element={<Suppliers />} />
       
 
 
