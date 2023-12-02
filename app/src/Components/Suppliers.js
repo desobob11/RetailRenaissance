@@ -112,6 +112,8 @@ export default function Suppliers() {
             setDetailRow(result["result"]);
             setDetailCol(get_columns(result["result"]));
             setSelectedID("");
+            setContainsRows([]);
+            setContainsCols([]);
         });
     }
 
@@ -126,6 +128,8 @@ export default function Suppliers() {
             setShipmentRows(result["result"]);
             setShipmentCols(createColumnsShipment(get_columns(result["result"])));
             setSelectedID("");
+            setContainsRows([]);
+            setContainsCols([]);
         });
     }
 
