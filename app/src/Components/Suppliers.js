@@ -48,8 +48,16 @@ export default function Suppliers() {
     const [selectedID, setSelectedID] = useState("");
     const [selectedName, setSelectedName] = useState("");
 
-    const [detailRow, setDetailRow] = useState([])
-    const [detailCol, setDetailCol] = useState([])
+    const [detailRow, setDetailRow] = useState([]);
+    const [detailCol, setDetailCol] = useState([]);
+
+    const [shipmentRows, setShipmentRows] = useState([]);
+    const [shipmentCols, setShipmentCols] = useState([]);
+
+    const [containsRows, setContainsRows] = useState([]);
+    const [containsCols, setContainsCols] = useState([]);
+
+    const [shipmentID, setShipmentID] = useState("");
 
     const [supplierRows, setSupplierRows] = useState([]);
     const [supplierCols, setSupplierCols] = useState([]);
@@ -62,8 +70,8 @@ export default function Suppliers() {
         }
         if (selectedID != "") {
             get_supplier_detail();
+            get_shipment_detail();
         }
-
         if (detailRow.length != 0) {
             setContactNumber(detailRow[0]["Contact Number"]);
             setContactEmail(detailRow[0]["Contact Email"]);
@@ -71,9 +79,13 @@ export default function Suppliers() {
             setTotalReceived(detailRow[0]["Shipments Received"]);
             setAverageDelay(detailRow[0]["Average Shipping Delay"]);
         }
-        
+        if (shipmentID != "") {
+            get_shipment_breakdown();
+    
+        }
 
-    }, [selectedID, detailRow]);
+
+    }, [selectedID, shipmentID]);
 
 
     const get_supplier_data = (event) => {
@@ -98,7 +110,38 @@ export default function Suppliers() {
         };
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
             setDetailRow(result["result"]);
-            setDetailCol(createColumns(get_columns(result["result"])));
+            setDetailCol(get_columns(result["result"]));
+            setSelectedID("");
+        });
+    }
+
+    const get_shipment_detail = (event) => {
+        let paramString = `SUPPLIERS_shipment_details;;;(${selectedID})`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setShipmentRows(result["result"]);
+            setShipmentCols(createColumnsShipment(get_columns(result["result"])));
+            setSelectedID("");
+        });
+    }
+
+
+
+    const get_shipment_breakdown = (event) => {
+        let paramString = `SUPPLIERS_shipment_breakdown;;;(${shipmentID})`;
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: paramString,
+        };
+        fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+            setContainsRows(result["result"]);
+            setContainsCols(get_columns(result["result"]));
+            setShipmentID("");
         });
     }
 
@@ -112,17 +155,31 @@ export default function Suppliers() {
                     setSelectedID(params.row["ID"]);
                     setSelectedName(params.row["Company Name"])
                 };
-                const onRemove = () => {
-                    // Implement im not done but im assuming you gotta be like call an API to remove the data from the database havent gotten here yet 
-                    console.log('Remove', params.row);
-                };
                 return (
                     <>
                         <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                             View
                         </Button>
-                        <Button onClick={onRemove} color="secondary" variant="contained">
-                            Remove
+                    </>
+                );
+            },
+            width: 175
+        };
+    };
+
+    const createActionsColumnShipment = () => {
+        return {
+            field: 'actions',
+            headerName: 'Actions',
+            sortable: false,
+            renderCell: (params) => {
+                const onView = () => {
+                    setShipmentID(params.row["ID"]);
+                };
+                return (
+                    <>
+                        <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
+                            View
                         </Button>
                     </>
                 );
@@ -135,33 +192,6 @@ export default function Suppliers() {
 
     const createColumns = (data) => {
         const baseColumns = data.map(col => {
-            if (col.field === 'customer_id') {
-                return { ...col, headerName: 'Customer ID', };
-            }
-            if (col.field === 'phone_num') {
-                return { ...col, headerName: 'Phone-Number', };
-            }
-            if (col.field === 'email') {
-                return { ...col, headerName: '  Email', };
-            }
-            if (col.field === 'first_name') {
-                return { ...col, headerName: 'First Name', };
-            }
-            if (col.field === 'last_name') {
-                return { ...col, headerName: 'Last Name', };
-            }
-            if (col.field === 'address') {
-                return { ...col, headerName: 'Address', };
-            }
-            if (col.field === 'sales') {
-                return { ...col, headerName: 'Sales', };
-            }
-            if (col.field === 'cancelled') {
-                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
-            }
-            if (col.field === 'completed') {
-                return { ...col, headerName: 'Completed', cellClassName: getOrdersCancelledClassName };
-            }
             return col;
         });
         const actionsColumn = createActionsColumn();
@@ -170,24 +200,17 @@ export default function Suppliers() {
         return baseColumns;
     };
 
+    const createColumnsShipment = (data) => {
+        const baseColumns = data.map(col => {
+            return col;
+        });
+        const actionsColumn = createActionsColumnShipment();
+        baseColumns.push(actionsColumn);
+
+        return baseColumns;
+    };
 
 
-    const getOrdersCompletedClassName = (params) => {
-        const completed = params.row.completed;
-        console.log(completed);
-        if (completed >= 0) {
-            return 'row-complete';
-        };
-    }
-
-
-    const getOrdersCancelledClassName = (params) => {
-        const cancelled = params.row.cancelled;
-        console.log(cancelled);
-        if (cancelled >= 0) {
-            return 'row-cancelled';
-        };
-    }
 
 
 
@@ -217,6 +240,9 @@ export default function Suppliers() {
                     name={selectedName}
                 >
                 </SuppliersPanel>
+                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+                    Supplier Summary
+                </Typography>
                 <DataGrid
                     columns={supplierCols}
                     rows={supplierRows}
@@ -224,7 +250,7 @@ export default function Suppliers() {
                     sx={{
                         marginTop: "1%",
                         width: "80%",
-                        height: "1000px",
+                        height: "40%",
                         background: "white",
                         fontFamily: "Calibri",
                         marginLeft: "10%",
@@ -233,12 +259,61 @@ export default function Suppliers() {
                         '& .row-complete': { color: '#00BB00' }, // light green
                         '& .row-cancelled': { color: '#BB0000' } // light yellow
                     }}
-                    onRowSelectionModelChange={(id) => {
-                        // let record = userRows.filter((x) => {
-                        //      return x.ID == id;
-                        //  })
-                        //  alert(JSON.stringify(record));
+      
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
                     }}
+
+                >
+                </DataGrid>
+                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+                    Shipments from Supplier
+                </Typography>
+                <DataGrid
+                    columns={shipmentCols}
+                    rows={shipmentRows}
+                    getRowId={(row) => row.ID}
+                    sx={{
+                        marginTop: "1%",
+                        width: "80%",
+                        height: "40vh",
+                        background: "white",
+                        fontFamily: "Calibri",
+                        marginLeft: "10%",
+                        border: "none",
+                        borderRadius: "20px",
+                        '& .row-complete': { color: '#00BB00' }, // light green
+                        '& .row-cancelled': { color: '#BB0000' } // light yellow
+                    }}
+  
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
+                    }}
+
+                >
+                </DataGrid>
+                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+                    Shipment Details
+                </Typography>
+                <DataGrid
+                    columns={containsCols}
+                    rows={containsRows}
+                    getRowId={(row) => row.ID + row["Product ID"]}
+                    sx={{
+                        marginTop: "1%",
+                        width: "80%",
+                        height: "40vh",
+                        background: "white",
+                        fontFamily: "Calibri",
+                        marginLeft: "10%",
+                        border: "none",
+                        borderRadius: "20px",
+                        '& .row-complete': { color: '#00BB00' }, // light green
+                        '& .row-cancelled': { color: '#BB0000' } // light yellow
+                    }}
+
                     classes={{
                         columnHeader: 'myGridHeader',
                         footer: 'myGridFooter',
