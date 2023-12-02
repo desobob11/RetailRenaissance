@@ -4,10 +4,9 @@ import { useState, useEffect, setState } from "react";
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import App, { tablify, parse_bool, theme, get_columns } from "../App";
-import Navbar from './ListItems';
+import Navbar from './Navbar';
 import "../styles.css"
 import Table from '@mui/material/Table';
-import { LineChart } from '@mui/x-charts';
 
 import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
@@ -38,6 +37,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function DetailPanel(props) {
+    
+    const boldStyle = { fontWeight: 'bold', color: 'black' };
+
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -48,103 +50,79 @@ export default function DetailPanel(props) {
 
 
 
+// i didnt add alot of thme as props but they still print so idk, ex : customer_id  
 
     useEffect(() => {
-        setName(props["custName"]);
-        setPhone(props["phone"]);
-        setEmail(props["email"]);
-        setAddress(props["address"])
-    }, [])
+        setName(props.custName);
+        setPhone(props.phone);
+        setEmail(props.email);
+        setAddress(props.address);
+      }, [props.custName, props.phone, props.email, props.address]);
 
-    return (
+      return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-
             <Box
-            
-            sx={{background:"white",
-            width:"80%",
-            height:"25%",
-            fontFamily: "Calibri",
-            border: "none",
-            borderRadius: "20px",
-            marginLeft:"10%",
-            marginTop:"5%"
-        }}>
-
-                <Grid spacing={4} sx={{ width: "100%", height: "100%", display: 'flex' }}>
-            
-                <Grid item name="name"
                 sx={{
-                    width: "33.33%",
-                    height: "70%",
-                    borderStyle:"solid",
-                    borderWidth:"thin",
-                    borderColor:"lightgrey",
-                    borderLeft:"none",
-                    borderTop:"none",
-                    textAlign:"center",
-                    alignItems:"center",
-                    justifyContent:"center",
-                    display:'flex'
-                }}>
-                        <Typography component="h1" variant="h4">
-                            {name}
-                        </Typography>
-                </Grid>
-                    <Grid item name="info"
-                        sx={{
-                            width: "33.33%",
-                            height: "70%",
-                            borderStyle: "solid",
-                            borderWidth: "thin",
-                            borderColor: "lightgrey",
-                            borderTop: "none"
-                           // textAlign: "center",
-                           // alignItems: "center",
-                           // justifyContent: "center",
-                           // display: 'flex'
-                        }}>
-                        <Typography component="h1" variant="subtitle1" color="grey" sx={{position:"relative", left:35, top:20}}>
-                            SUPPLIER INFORMATION
-                        </Typography>
-                        <Typography component="h1" variant="subtitle1" sx={{ position: "relative", left: 35, top: 20 }}>
-                            <p></p>
-                            Contact Number          {phone} <p></p>
-                            Email Address           {email}
-                        </Typography>
-                    </Grid>
-     
-                    <Grid item name="analytics"
-                        sx={{
-                            width: "33.33%",
-                            height: "70%",
-                            borderStyle: "solid",
-                            borderWidth: "thin",
-                            borderColor: "lightgrey",
-                            borderRight:"none",
-                            borderTop: "none"
-                          //  textAlign: "center",
-                          //  alignItems: "center",
-                           // justifyContent: "center",
-                            //display: 'flex'
-                        }}>
-                        <Typography component="h1" variant="subtitle1" color="grey" sx={{ position: "relative", left: 35, top: 20 }}>
-                            SHIPPING ADDRESS
-                        </Typography>
-                        <Typography component="h1" variant="subtitle1" sx={{ position: "relative", left: 35, top: 20 }}>
-                            <p></p>
-                            {address} <p></p>
-                        </Typography>
-                    </Grid>
+                    background: "white",
+                    width: "80%",
+                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    fontFamily: "Calibri",
+                    border: "1px solid lightgrey",
+                    borderRadius: "20px",
+                    padding: 2,
+                    display: 'flex', 
+                    alignItems: 'center', // centers items vertically
+                    alignItems: 'flex-start', // aligns items to the start of the flex container
 
-
-            </Grid>
+                }}
+            >
+                <Box sx={{ flex: 1, textAlign: 'center', padding: 2, marginTop: 2, }}> {/* Flex 1 for equal width */}
+                    <Typography variant="h5" gutterBottom>
+                        {props.custName} {props.lastName} 
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Customer ID:</span> {props.customer_id}
+                    </Typography>
+                </Box>
+                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
+                    <Typography variant="h6" gutterBottom>
+                        PERSONAL INFORMATION
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Contact Number:</span> {props.phone}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Gender:</span> {props.gender}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Date of Birth:</span> {props.dob}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Member Since:</span> {props.memberSince}
+                    </Typography>
+                </Box>
+                <Box sx={{ flex: 2, paddingLeft: 2, marginLeft: 2 }}>
+                    <Typography variant="h6" gutterBottom>
+                        SHIPPING ADDRESS
+                    </Typography>
+                    <Typography color="textSecondary">{props.address}</Typography>
+                 </Box>
+                 <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 2, marginLeft: 2, }}> 
+                    <Typography variant="h6" gutterBottom>
+                        ORDER DETAILS
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Total Order:</span> {props.totalOrder}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Completed:</span> {props.completed}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Cancelled:</span> {props.cancelled}
+                    </Typography>
+                </Box>
             </Box>
-
-
         </ThemeProvider>
-
-
     );
 }

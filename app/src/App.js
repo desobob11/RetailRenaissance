@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
-import UsersPage from './Components/Users';
+//import UsersPage from './Components/Users';
 import Customers from './Components/Customers'
 import Homepage from './Components/Homepage';
+import Transactions from './Components/TransactionsPage';
+import Products from './Components/ProductsPage'
+
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
@@ -15,7 +18,7 @@ const defaultTheme = createTheme();
 
 
 /**
- * This functio assumes that the result set is from a stored procedure call. This means
+ * This function assumes that the result set is from a stored procedure call. This means
  * that the results sit is an array with length n=2, where the first index
  * is an array of objects containing the request data, and the second index
  * is an array of objects containing metadata for the resultset (headers, etc.)
@@ -60,7 +63,7 @@ export function tablify(resultset) {
 export const theme = createTheme({
   palette: {
     background:{
-      default:"#f0f0f0"
+      default:"#EFE7EB"
     }
   }
 
@@ -91,6 +94,11 @@ function App() {
           <Route path="/users" element={<Homepage />} />
           <Route path="/homepage"  element={<Reports />} />
           <Route path="/customers" element={<Customers/>} />
+          <Route path="/transactions" element={<Transactions/>} />
+          <Route path="/products" element={<Products/>} />
+      
+
+
         </Routes>
       </Router>
     </ThemeProvider>

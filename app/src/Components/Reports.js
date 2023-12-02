@@ -4,7 +4,7 @@ import { useState, useEffect, setState } from "react";
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import App, { tablify, parse_bool, theme, get_columns } from "../App";
-import Navbar from './ListItems';
+import Navbar from './Navbar';
 import "../styles.css"
 import Table from '@mui/material/Table';
 import {LineChart} from '@mui/x-charts';
@@ -54,6 +54,7 @@ function get_series(result) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
+
 
 export default function Reports() {
 
@@ -217,7 +218,10 @@ export default function Reports() {
                         alert(JSON.stringify(record));
                     }}
                     */
-
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
+                      }}
                 >
                 </DataGrid>
             </Grid>
@@ -277,12 +281,15 @@ export default function Reports() {
                     alert(JSON.stringify(record));
                 }}
                 */
-
+                classes={{
+                    columnHeader: 'myGridHeader',
+                    footer: 'myGridFooter',
+                  }}
                 >
                 </DataGrid>
                    </Grid>
                 <Grid item>
-                                <DataGrid name="Latest"
+                 <DataGrid name="Latest"
                     columns={latestCols}
                     rows={latestRows}
                     getRowId={(row) => row.ID}
@@ -304,6 +311,7 @@ export default function Reports() {
                     */
 
                 >
+                    
                 </DataGrid>
             </Grid>
             <Grid item>
