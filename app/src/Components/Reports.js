@@ -188,7 +188,7 @@ export default function Reports() {
                 alignContent: "center",
                 justifyContent: "center",
                 '& .row-highQuantity': { color: '#00BB00' }, // light green
-                '& .row-midQuantity': { color: '#FFAA00' }, // light yellow
+                '& .row-midQuantity': { color: '#FF9900' }, // light yellow
                 '& .row-lowQuantity': { color: '#BB0000' }, // light red
             }}>
           
@@ -287,6 +287,17 @@ export default function Reports() {
                     columns={latestCols}
                     rows={latestRows}
                     getRowId={(row) => row.ID}
+                    getCellClassName={(x) => {
+                        if (x.field === "Status" && x.value === "Cancelled") {
+                            return 'row-lowQuantity';
+                        }
+                        else if (x.field === "Status" && x.value === "Complete") {
+                            return 'row-highQuantity';
+                        }
+                        else if (x.field === "Status") {
+                            return 'row-midQuantity';
+                        }
+                    }}
                     sx={{
                         width: "30vw",
                         height: "30vh",

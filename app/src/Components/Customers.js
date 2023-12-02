@@ -204,9 +204,8 @@ export default function Customers() {
                         marginLeft:"10%",
                         border: "none",
                         borderRadius: "20px",
-                        '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
-                        '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
-
+                        '& .row-complete': { color: '#00BB00' }, // light green
+                        '& .row-cancelled': { color: '#BB0000' } // light yellow
                     }}
                     onRowSelectionModelChange={(id) => {
                         // let record = userRows.filter((x) => {

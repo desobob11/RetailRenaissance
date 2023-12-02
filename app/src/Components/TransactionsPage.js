@@ -94,9 +94,9 @@ export default function Transactions() {
                     height: "60vh",
                     background: "white",
                     fontFamily: "Calibri",
-                    '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
-                    '& .row-pending': { backgroundColor: '#FFF9C4' }, // light yellow
-                    '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
+                    '& .row-highQuantity': { color: '#00BB00' }, // light green
+                    '& .row-midQuantity': { color: '#FF9900' }, // light yellow
+                    '& .row-lowQuantity': { color: '#BB0000' }, // light red
                 }}>
                     <DataGrid 
                         columns={TransactionsCols} 
