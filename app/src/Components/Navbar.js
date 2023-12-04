@@ -41,6 +41,7 @@ export const mainListItems = (
                 <Box className="navbar-text">
                     Products
                 </Box>
+
             </Typography>} />
         </ListItemButton>
         <ListItemButton component={Link} to= "/Transactions">
@@ -73,7 +74,7 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/UsersPage">
             <ListItemIcon>
                 <AdminPanelSettingsIcon className="icon" />
             </ListItemIcon>

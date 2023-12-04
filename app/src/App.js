@@ -9,7 +9,7 @@ import Customers from './Components/Customers'
 import Homepage from './Components/Homepage';
 import Transactions from './Components/TransactionsPage';
 import Products from './Components/ProductsPage'
-
+import UsersPage from './Components/UsersPage'
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
@@ -96,6 +96,8 @@ function App() {
           <Route path="/customers" element={<Customers/>} />
           <Route path="/transactions" element={<Transactions/>} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/UsersPage" element={<UsersPage/>} />
+
       
 
 
