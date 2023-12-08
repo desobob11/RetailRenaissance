@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
 //import UsersPage from './Components/Users';
-import Customers from './Components/Customers'
-import Homepage from './Components/Homepage';
+import Customers from './Components/CustomersPage'
+import Homepage from './Components/UsersPage';
 import Transactions from './Components/TransactionsPage';
 import Products from './Components/ProductsPage'
 

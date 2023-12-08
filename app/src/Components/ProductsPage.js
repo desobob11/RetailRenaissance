@@ -61,14 +61,14 @@ export default function Products() {
           sortable: false,
           filterable: false,
           renderCell: (params) => {
-            const onRemove = () => {
+            const onDeactivate = () => {
               // Implement  remove logic here, e.g. call an API to remove the data from the database
-              console.log('Remove', params.row);
+              console.log('Deactivate', params.row);
             };
             return (
               <>
-                <Button onClick={onRemove} color="secondary" variant="contained">
-                  Remove
+                <Button onClick={onDeactivate} color="secondary" variant="contained">
+                  Deactivate
                 </Button>
               </>
             );

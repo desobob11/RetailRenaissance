@@ -73,7 +73,7 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/users">
             <ListItemIcon>
                 <AdminPanelSettingsIcon className="icon" />
             </ListItemIcon>

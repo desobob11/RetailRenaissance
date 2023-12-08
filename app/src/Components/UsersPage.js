@@ -3,33 +3,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useState, useEffect, setState } from "react";
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import App, { tablify, parse_bool, theme, get_columns } from "../App";
+import App, { tablify, parse_bool, theme, get_columns} from "../App";
 import Navbar from './Navbar';
 import "../styles.css"
 import Table from '@mui/material/Table';
-import DetailPanel from './DetailPanel'
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
-import { TableBody, TableHead, TableRow, Box } from '@mui/material';
+import { TableBody, TableHead, TableRow , Box} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { columnsStateInitializer } from '@mui/x-data-grid/internals';
-import Button from '@mui/material/Button';
+import DetailPanel from './CustomerPanel'
 
-
-
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 
 
@@ -38,41 +22,39 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function Customers() {
-    const [custName, setCustName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [totalOrder, setTotalOrder] = useState("");
-    const [completed, setCompleted] = useState("");
-    const [totalSales, setTotalSales] = useState("");
+export default function UsersSummary() {
 
-    const [customerRows, setCustomerRows] = useState([]);
-    const [customerCols, setCustomerCols] = useState([]);
-    const [selectedCustomer, setSelectedCustomer] = useState({});
+
+    const [userRows, setUserRows] = useState([]);
+    const [userCols, setUserCols] = useState([]);
+    const [selectedUser, setSelectedUser] = useState({});
 
 
     useEffect(() => {
-        if (customerRows.length == 0) {
-            get_customer_data()
+        if (userRows.length == 0) {
+            get_user_data()
         }
    
     }, []);
 
 
-    const get_customer_data = (event) => {
-        let paramString = `CUSTOMERS_get_all_data;;;()`;
+
+    const get_user_data = (event) => {
+        let paramString = `User_user_summary;;;()`;
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
             body: paramString,
         };
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
-            setCustomerRows(result["result"]);
-            setCustomerCols(createColumns(get_columns(result["result"])));
+            setUserRows(result["result"]);
+            setUserCols(createColumns(get_columns(result["result"])));
         });
 
     }
+
+
+
 
     const createActionsColumn = () => {
         return {
@@ -81,25 +63,25 @@ export default function Customers() {
           sortable: false,
           renderCell: (params) => {
             const onView = () => {
-              setSelectedCustomer(params.row);
+              setSelectedUser(params.row);
               console.log(params.row);
             };
-            const onRemove = () => {
-              // Implement im not done but im assuming you gotta be like call an API to remove the data from the database havent gotten here yet 
-              console.log('Remove', params.row);
+            const onDeactivate = () => {
+              // Implement im not done but im assuming you gotta be like call an API to Deactivate the data from the database havent gotten here yet 
+              console.log('Deactivate', params.row);
             };
             return (
               <>
                 <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                   View
                 </Button>
-                <Button onClick={onRemove} color="secondary" variant="contained">
-                  Remove
+                <Button onClick={onDeactivate} color="secondary" variant="contained">
+                  Deactivate
                 </Button>
               </>
             );
           },
-          width: 175 
+          width: 225
         };
       };
 
@@ -107,8 +89,8 @@ export default function Customers() {
 
     const createColumns = (data) => {
         const baseColumns = data.map(col => {
-            if (col.field === 'customer_id') { 
-                return { ...col, headerName: 'Customer ID', };
+            if (col.field === 'user_id') { 
+                return { ...col, headerName: 'User ID', };
             }
             if (col.field === 'phone_num') { 
                 return { ...col, headerName: 'Phone-Number',};
@@ -122,11 +104,14 @@ export default function Customers() {
             if (col.field === 'last_name') { 
                 return { ...col, headerName: 'Last Name',};
             }
-            if (col.field === 'address') { 
-                return { ...col, headerName: 'Address',};
+            if (col.field === 'employee_date_hired') { 
+                return { ...col, headerName: 'Date Hired',};
             }
-            if (col.field === 'sales') { 
-                return { ...col, headerName: 'Sales',};
+            if (col.field === 'manager_id') { 
+                return { ...col, headerName: 'Manager ID',};
+            }
+            if (col.field === 'manager_branch_id') { 
+                return { ...col, headerName: 'Branch ID',};
             }
             if (col.field === 'cancelled') { 
                 return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
@@ -163,7 +148,7 @@ export default function Customers() {
 
 
 
-    const totalOrders = selectedCustomer.completed + selectedCustomer.cancelled;
+    const totalOrders = selectedUser.completed + selectedUser.cancelled;
 
 
     
@@ -180,21 +165,18 @@ export default function Customers() {
         }}>
             <Navbar></Navbar>
                 <DetailPanel 
-                custName={selectedCustomer.first_name}
-                lastName={selectedCustomer.last_name} 
-                customer_id={selectedCustomer.customer_id} 
-                phone={selectedCustomer.phone_num}
-                email={selectedCustomer.email}
-                address={selectedCustomer.address}
-                totalOrder={totalOrders} 
-                completed={selectedCustomer.completed} 
-                cancelled={selectedCustomer.cancelled} 
+                custName={selectedUser.first_name}
+                lastName={selectedUser.last_name} 
+                user_id={selectedUser.user_id} 
+                phone={selectedUser.phone_num}
+                email={selectedUser.email}
+                address={selectedUser.address}
                 >
                 </DetailPanel>
                 <DataGrid
-                    columns={customerCols}
-                    rows={customerRows}
-                    getRowId={(row) => row.customer_id}
+                    columns={userCols}
+                    rows={userRows}
+                    getRowId={(row) => row.user_id}
                     sx={{
                         marginTop:"1%",
                         width: "80%",
