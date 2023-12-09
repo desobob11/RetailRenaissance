@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
-
+import Button from '@mui/material/Button';
+import DetailPanel from './TransactionPanel'; // Import the DetailPanel component as it is in a separate .js file
 import App, { get_columns, theme } from "../App";
 import Navbar from './Navbar';
 import "../styles.css";
@@ -28,12 +29,35 @@ function Copyright(props) {
 export default function Transactions() {
     const [TransactionsRow, setTransactionsRows] = useState([]);
     const [TransactionsCols, setTransactionsCols] = useState([]);
+    const [selectedTransaction, setSeletecedTransaction] = useState({});
+   
+
+    const handleRefund = (id) => {
+        // API call to refund the transaction
+        // Update the state to reflect the new status
+        setTransactionsRows(prevRows =>
+            prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Cancelled' } : row)
+        );
+        console.log('Refund', id);
+    };
+
+    const handleReorder = (id) => {
+        // API call to reorder the transaction
+        // Update the state to reflect the new status
+        setTransactionsRows(prevRows =>
+            prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Pending' } : row)
+        );
+        console.log('Reorder', id);
+    };
+
 
     useEffect(() => {
         if (TransactionsRow.length === 0) {
             get_transactions_data();
         }
     }, [TransactionsRow]);
+
+
 
     const get_transactions_data = () => {
        let paramString = `Order_get_all_data;;;()`;
@@ -50,8 +74,46 @@ export default function Transactions() {
           });
     };
 
+    const createActionsColumn = () => {
+        return {
+            field: 'actions',
+            headerName: 'Actions',
+            sortable: false,
+            renderCell: (params) => {
+                const { row } = params;
+                const { order_status, transaction_id } = row;
+
+                const onView = () => {
+                    setSeletecedTransaction(row);
+                    console.log('View', row);
+                };
+
+                return (
+                    <>
+                        <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
+                            View
+                        </Button>
+                        {order_status === 'Complete' || order_status === 'Pending' ? (
+                            <Button onClick={() => handleRefund(transaction_id)} color="secondary" variant="contained">
+                                Refund
+                            </Button>
+                        ) : null}
+                        {order_status === 'Cancelled' ? (
+                            <Button onClick={() => handleReorder(transaction_id)} color="secondary" variant="contained">
+                                Reorder
+                            </Button>
+                        ) : null}
+                    </>
+                );
+            },
+            width: 200
+        };
+    };
+
+
+
     const createColumns = (data) => {
-        return data.map(col => {
+        const baseColumns = data.map(col => {
             if (col.field === 'order_status') { 
                 return { ...col, headerName: 'Status', cellClassName: getOrderStatusClassName };
             }
@@ -63,7 +125,10 @@ export default function Transactions() {
             }
             return col;
         });
+        const actionsColumn = createActionsColumn();
+        baseColumns.push(actionsColumn);
 
+        return baseColumns;
     };
 
     const getOrderStatusClassName = (params) => {
@@ -84,6 +149,18 @@ export default function Transactions() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Navbar />
+            {selectedTransaction && selectedTransaction.transaction_id && (
+                <DetailPanel 
+                  transactionId={selectedTransaction.transaction_id}
+                  userId={selectedTransaction.user_id}
+                  custName={selectedTransaction.first_name}
+                  lastName={selectedTransaction.last_name} 
+                  user_id={selectedTransaction.user_id} 
+                  phone={selectedTransaction.phone_num}
+                  email={selectedTransaction.email}
+                  address={selectedTransaction.address}
+                />
+            )}
             <Grid className='background-grid' sx={{
                 alignContent: "center",
                 justifyContent: "center"
