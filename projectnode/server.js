@@ -15,11 +15,16 @@ async function query_db(msg_body, res) {
     let params = msg_body.split(";;;")[1];
     query = `CALL ${sp_name}${params}`;
 
+
     con.query(query, (err, result, fields) =>  {
-        if (err) throw err
-        console.log(JSON.stringify({ "result": result[0] }));
-        res.end(JSON.stringify({"result": result[0]}));
+        if (err) {res.end(JSON.stringify({ "result": [{ "@result": 0 }] }))}
+        else {
+            console.log(JSON.stringify({ "result": result[0] }));
+            res.end(JSON.stringify({ "result": result[0] }));
+        }
     })
+
+
 }
 
 
