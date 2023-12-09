@@ -186,7 +186,10 @@ export default function Reports() {
         
             <Grid container spacing={4}className='background-grid' sx={{
                 alignContent: "center",
-                justifyContent: "center"
+                justifyContent: "center",
+                '& .row-highQuantity': { color: '#00BB00' }, // light green
+                '& .row-midQuantity': { color: '#FF9900' }, // light yellow
+                '& .row-lowQuantity': { color: '#BB0000' }, // light red
             }}>
           
 
@@ -195,6 +198,17 @@ export default function Reports() {
                     columns={bestSellingCols}
                     rows={bestSellingRows}
                     getRowId={(row) => row.ID}
+                    getCellClassName={(x) => {
+                        if (x.field === "Current Stock" && x.value >= 600) {
+                            return 'row-highQuantity';
+                        }
+                        else if (x.field === "Current Stock" && x.value <= 200) {
+                            return 'row-lowQuantity';
+                        }
+                        else if (x.field === "Current Stock") {
+                            return 'row-midQuantity'; 
+                        }
+                    }}
                     sx={{
                         width: "80vw",
                         height: "30vh",
@@ -210,14 +224,8 @@ export default function Reports() {
                         setBestSellingId(record[0]["ID"])
                         setBestSellingName(record[0]["Name"])
                     }}
-                    /*
-                    onRowSelectionModelChange={(id) => {
-                        let record = userRows.filter((x) => {
-                            return x.ID == id;
-                        })
-                        alert(JSON.stringify(record));
-                    }}
-                    */
+  
+
                     classes={{
                         columnHeader: 'myGridHeader',
                         footer: 'myGridFooter',
@@ -245,22 +253,12 @@ export default function Reports() {
                     />
 
                 </Box>
+
             <Grid item>
-                <Typography variant="h5" marginLeft="6vw" marginTop="1vh">
-                    Trending Products (90 Days)
-                </Typography>
-            </Grid>
-                <Grid item>
-                    <Typography variant="h5" marginLeft="15vw" marginTop="1vh">
-                        Latest Transactions
+            
+                    <Typography variant="h5" textAlign={"center"}>
+                        Trending Products (90 Days)
                     </Typography>
-                </Grid>
-                <Grid item>
-                    <Typography variant="h5" marginLeft="18vw" marginTop="1vh">
-                        Order Summary (Last 30 Days)
-                    </Typography>
-                </Grid>
-            <Grid item>
                 <DataGrid name="trending"
                     columns={trendingCols}
                     rows={trendingRows}
@@ -273,14 +271,7 @@ export default function Reports() {
                         border:"none",
                         borderRadius: "20px"
                     }}
-                /*
-                onRowSelectionModelChange={(id) => {
-                    let record = userRows.filter((x) => {
-                        return x.ID == id;
-                    })
-                    alert(JSON.stringify(record));
-                }}
-                */
+ 
                 classes={{
                     columnHeader: 'myGridHeader',
                     footer: 'myGridFooter',
@@ -288,11 +279,25 @@ export default function Reports() {
                 >
                 </DataGrid>
                    </Grid>
-                <Grid item>
+                <Grid item textAlign={"center"}>
+                    <Typography variant="h5" >
+                        Latest Transactions
+                    </Typography>
                  <DataGrid name="Latest"
                     columns={latestCols}
                     rows={latestRows}
                     getRowId={(row) => row.ID}
+                    getCellClassName={(x) => {
+                        if (x.field === "Status" && x.value === "Cancelled") {
+                            return 'row-lowQuantity';
+                        }
+                        else if (x.field === "Status" && x.value === "Complete") {
+                            return 'row-highQuantity';
+                        }
+                        else if (x.field === "Status") {
+                            return 'row-midQuantity';
+                        }
+                    }}
                     sx={{
                         width: "30vw",
                         height: "30vh",
@@ -301,20 +306,16 @@ export default function Reports() {
                         border: "none",
                         borderRadius:"20px"
                     }}
-                    /*
-                    onRowSelectionModelChange={(id) => {
-                        let record = userRows.filter((x) => {
-                            return x.ID == id;
-                        })
-                        alert(JSON.stringify(record));
-                    }}
-                    */
+
 
                 >
                     
                 </DataGrid>
             </Grid>
             <Grid item>
+                    <Typography variant="h5" textAlign={"center"}>
+                        Order Summary (Last 30 Days)
+                    </Typography>
                 <Box sx={{
                     backgroundColor:"white",
                         width: "20vw",

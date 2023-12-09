@@ -129,9 +129,9 @@ export default function Products() {
                     height: "60vh",
                     background: "white",
                     fontFamily: "Calibri",
-                    '& .row-highQuantity': { backgroundColor: '#C8E6C9' }, // light green
-                    '& .row-midQuantity': { backgroundColor: '#FFF9C4' }, // light yellow
-                    '& .row-lowQuantity': { backgroundColor: '#FFCDD2' }, // light red
+                    '& .row-highQuantity': { color: '#00BB00' }, // light green
+                    '& .row-midQuantity': { color: '#FF9900' }, // light yellow
+                    '& .row-lowQuantity': { color: '#BB0000' }, // light red
                 }}>
                     <DataGrid 
                         columns={productsCols} 

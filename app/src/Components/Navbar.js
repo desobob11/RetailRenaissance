@@ -63,7 +63,7 @@ export const mainListItems = (
                 </Box>
             </Typography>} />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component={Link} to="/suppliers">
             <ListItemIcon>
                 <LocalShippingIcon className="icon" />
             </ListItemIcon >

@@ -5,14 +5,15 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignInSide from './Components/SignIn';
 //import UsersPage from './Components/Users';
-import Customers from './Components/CustomersPage'
-import Homepage from './Components/UsersPage';
+import Customers from './Components/Customers'
+import Homepage from './Components/Homepage';
 import Transactions from './Components/TransactionsPage';
 import Products from './Components/ProductsPage'
 
 import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
+import Suppliers from './Components/Suppliers';
 
 const defaultTheme = createTheme();
 
@@ -96,6 +97,7 @@ function App() {
           <Route path="/customers" element={<Customers/>} />
           <Route path="/transactions" element={<Transactions/>} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/suppliers" element={<Suppliers />} />
       
 
 
