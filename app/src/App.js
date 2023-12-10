@@ -15,6 +15,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
 import Suppliers from './Components/Suppliers';
 import AddProduct from './Components/AddProduct';
+import CreateShipment from './Components/CreateShipment';
+import AllShipments from './Components/AllShipment';
 
 const defaultTheme = createTheme();
 
@@ -30,7 +32,7 @@ const defaultTheme = createTheme();
 
 export var login_name = "";
 //export login_name;
-
+window.active_user_id = 0;
 export var logged_in = false;
 export var username = "";
 
@@ -101,7 +103,8 @@ function App() {
           <Route path="/products" element={<Products/>} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/addproduct" element={<AddProduct />} />
-
+          <Route path="/createshipment" element={<CreateShipment />} />
+          <Route path="/allshipments" element={<AllShipments />} />
 
         </Routes>
       </Router>

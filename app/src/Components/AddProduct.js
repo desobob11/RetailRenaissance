@@ -33,7 +33,6 @@ export default function AddProduct() {
     const [priceBox, setPriceBox] = useState("");
     const [stockBox, setStockBox] = useState("");
     const [branchID, setBranchID] = useState("");
-  //  const [returnCode, setReturnCode] = useState(-1);
 
 
     const handleName = function(event) {
