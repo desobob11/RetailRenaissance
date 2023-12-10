@@ -37,6 +37,7 @@ export default function UsersSummary() {
    
     }, []);
 
+    
 
 
     const get_user_data = (event) => {
@@ -66,22 +67,15 @@ export default function UsersSummary() {
               setSelectedUser(params.row);
               console.log(params.row);
             };
-            const onDeactivate = () => {
-              // Implement im not done but im assuming you gotta be like call an API to Deactivate the data from the database havent gotten here yet 
-              console.log('Deactivate', params.row);
-            };
             return (
               <>
                 <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                   View
                 </Button>
-                <Button onClick={onDeactivate} color="secondary" variant="contained">
-                  Deactivate
-                </Button>
               </>
             );
           },
-          width: 225
+          width: 100
         };
       };
 
@@ -96,7 +90,7 @@ export default function UsersSummary() {
                 return { ...col, headerName: 'Phone-Number',};
             }
             if (col.field === 'email') { 
-                return { ...col, headerName: '  Email',};
+                return { ...col, headerName: '  Email', hideable: true};
             }
             if (col.field === 'first_name') { 
                 return { ...col, headerName: 'First Name',};
@@ -177,6 +171,17 @@ export default function UsersSummary() {
                     columns={userCols}
                     rows={userRows}
                     getRowId={(row) => row.user_id}
+                    initialState={{
+                        columns: {
+                            columnVisibilityModel: {
+                                email: false,
+                                employee_date_hired: false,
+                                manager_id: false,
+                                manager_branch_id: false,
+
+                            },
+                        },
+                    }}
                     sx={{
                         marginTop:"1%",
                         width: "80%",

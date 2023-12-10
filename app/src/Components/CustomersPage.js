@@ -71,24 +71,16 @@ export default function Customers() {
               setSelectedCustomer(params.row);
               console.log(params.row);
             };
-            const onDeactivate = () => {
-              // Implement im not done but im assuming you gotta be like call an API to Deactivate the data from the database havent gotten here yet 
-              console.log('Deactivate', params.row);
-            };
             return (
               <>
                 <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                   View
                 </Button>
-                <Button onClick={onDeactivate} color="secondary" variant="contained">
-                  Deactivate
-                </Button>
               </>
             );
           },
 
-          width: 175 
-
+          width: 100
         };
       };
 

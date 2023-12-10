@@ -31,9 +31,9 @@ export default function Products() {
     const [productsCols, setProductsCols] = useState([]);
 
     useEffect(() => {
-       // if (productsRow.length === 0) {
-       //     get_product_data();
-       // }
+        if (productsRow.length === 0) {
+           get_product_data();
+        }
     }, [productsRow]);
 
     const get_product_data = () => {
@@ -53,31 +53,9 @@ export default function Products() {
 
 
 
-    const createActionsColumn = () => {
-        return {
-          field: 'actions',
-          headerName: 'Actions',
-          sortable: false,
-          filterable: false,
-          renderCell: (params) => {
-            const onDeactivate = () => {
-              // Implement  remove logic here, e.g. call an API to remove the data from the database
-              console.log('Deactivate', params.row);
-            };
-            return (
-              <>
-                <Button onClick={onDeactivate} color="secondary" variant="contained">
-                  Deactivate
-                </Button>
-              </>
-            );
-          },
-          width: 125 // Adjust the width as needed
-        };
-      };
 
     const createColumns = (data) => {
-        const baseColumns = data.map(col => {
+        return data.map(col => {
             if (col.field === 'num_stock') { 
                 return { ...col, headerName: 'Current Stock', cellClassName: getQuantityClassName };
             }
@@ -95,9 +73,6 @@ export default function Products() {
             }
             return col;
         });
-        const actionsColumn = createActionsColumn();
-        baseColumns.push(actionsColumn);
-        return baseColumns;
     };
 
     const getQuantityClassName = (params) => {
