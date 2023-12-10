@@ -36,7 +36,7 @@ export default function Transactions() {
         // API call to refund the transaction
         // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
-            prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Cancelled' } : row)
+            prevRows.map(row => row.transaction_id === id ? { ...row, status: 'Cancelled' } : row)
         );
         console.log('Refund', id);
     };
@@ -45,7 +45,7 @@ export default function Transactions() {
         // API call to reorder the transaction
         // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
-            prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Pending' } : row)
+            prevRows.map(row => row.transaction_id === id ? { ...row, status: 'Pending' } : row)
         );
         console.log('Reorder', id);
     };
@@ -60,7 +60,7 @@ export default function Transactions() {
 
 
     const get_transactions_data = () => {
-       let paramString = `Order_get_all_data;;;()`;
+       let paramString = `TRANSACTION_get_all_data;;;()`;
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
@@ -81,7 +81,7 @@ export default function Transactions() {
             sortable: false,
             renderCell: (params) => {
                 const { row } = params;
-                const { order_status, transaction_id } = row;
+                const { status, transaction_id } = row;
 
                 const onView = () => {
                     setSeletecedTransaction(row);
@@ -93,12 +93,12 @@ export default function Transactions() {
                         <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                             View
                         </Button>
-                        {order_status === 'Complete' || order_status === 'Pending' ? (
+                        {status === 'Complete' || status === 'Pending' ? (
                             <Button onClick={() => handleRefund(transaction_id)} color="secondary" variant="contained">
                                 Refund
                             </Button>
                         ) : null}
-                        {order_status === 'Cancelled' ? (
+                        {status === 'Cancelled' ? (
                             <Button onClick={() => handleReorder(transaction_id)} color="secondary" variant="contained">
                                 Reorder
                             </Button>
@@ -114,14 +114,20 @@ export default function Transactions() {
 
     const createColumns = (data) => {
         const baseColumns = data.map(col => {
-            if (col.field === 'order_status') { 
+            if (col.field === 'status') { 
                 return { ...col, headerName: 'Status', cellClassName: getOrderStatusClassName };
             }
-            if (col.field === 'user_id') { 
-                return { ...col, headerName: 'User ID',};
+            if (col.field === 'amount') { 
+                return { ...col, headerName: 'Amount',};
+            }
+            if (col.field === 'customer_id') { 
+                return { ...col, headerName: 'Customer ID',};
             }
             if (col.field === 'transaction_id') { 
                 return { ...col, headerName: 'Transaction ID',};
+            }
+            if (col.field === 'transaction_date') { 
+                return { ...col, headerName: 'Date',};
             }
             return col;
         });
@@ -132,13 +138,13 @@ export default function Transactions() {
     };
 
     const getOrderStatusClassName = (params) => {
-        const order_status = params.row.order_status;
-        console.log(order_status); // This will print the status for each row to the console
-        if (order_status === 'Complete') {
+        const status = params.row.status;
+        console.log(status); // This will print the status for each row to the console
+        if (status === 'Complete') {
             return 'row-complete';
-        } else if (order_status === 'Pending') {
+        } else if (status === 'Pending') {
             return 'row-pending';
-        } else if (order_status === 'Cancelled') {
+        } else if (status === 'Cancelled') {
             return 'row-cancelled';
         }
         return '';
@@ -171,9 +177,9 @@ export default function Transactions() {
                     height: "60vh",
                     background: "white",
                     fontFamily: "Calibri",
-                    '& .row-highQuantity': { color: '#00BB00' }, // light green
-                    '& .row-midQuantity': { color: '#FF9900' }, // light yellow
-                    '& .row-lowQuantity': { color: '#BB0000' }, // light red
+                    '& .row-complete': { backgroundColor: '#90EE90' }, // light green
+                    '& .row-pending': { backgroundColor: '#FFFFE0' }, // light yellow
+                    '& .row-cancelled': { backgroundColor: '#FFC0CB' }, // light red
                 }}>
                     <DataGrid 
                         columns={TransactionsCols} 

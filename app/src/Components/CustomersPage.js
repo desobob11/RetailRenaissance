@@ -18,23 +18,7 @@ import Button from '@mui/material/Button';
 
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
-
-
-
-// TODO Deactivate, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -46,12 +30,12 @@ export default function Customers() {
     const [totalOrder, setTotalOrder] = useState("");
     const [completed, setCompleted] = useState("");
     const [totalSales, setTotalSales] = useState("");
-
     const [customerRows, setCustomerRows] = useState([]);
     const [customerCols, setCustomerCols] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState({});
-
-
+  
+  
+  
     useEffect(() => {
         if (customerRows.length == 0) {
             get_customer_data()
@@ -104,7 +88,7 @@ export default function Customers() {
               </>
             );
           },
-          width: 225
+          width: 175 
         };
       };
 
@@ -134,16 +118,15 @@ export default function Customers() {
                 return { ...col, headerName: 'Sales',};
             }
             if (col.field === 'cancelled') { 
-                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
+                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCancelledClassName };
             }
             if (col.field === 'completed') { 
-                return { ...col, headerName: 'Completed', cellClassName: getOrdersCancelledClassName };
+                return { ...col, headerName: 'Completed', cellClassName: getOrdersCompletedClassName };
             }
             return col;
         });
         const actionsColumn = createActionsColumn();
         baseColumns.push(actionsColumn);
-
         return baseColumns;
     };
 
@@ -167,11 +150,10 @@ export default function Customers() {
     }
 
 
-
     const totalOrders = selectedCustomer.completed + selectedCustomer.cancelled;
-
-
     
+
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -211,7 +193,6 @@ export default function Customers() {
                         borderRadius: "20px",
                         '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
                         '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
-
                     }}
                     onRowSelectionModelChange={(id) => {
                         // let record = userRows.filter((x) => {
@@ -223,14 +204,9 @@ export default function Customers() {
                         columnHeader: 'myGridHeader',
                         footer: 'myGridFooter',
                       }}
-
                 >
                 </DataGrid>
         </Box>
-
-
         </ThemeProvider>
-
-
     );
 }
