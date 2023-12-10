@@ -1,0 +1,6 @@
+DELIMITER $$ 
+CREATE PROCEDURE `TRANSACTION_get_all_data` ()
+BEGIN
+SELECT * FROM rr.transaction;
+END $$ 
+DELIMITER ;
