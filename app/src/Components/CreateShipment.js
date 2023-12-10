@@ -94,7 +94,6 @@ export default function CreateShipment() {
             get_warehouse_prods();
         }
 
-
     }, [,warehouseIDs, warehouseBox, warehouseProds]);
 
 
