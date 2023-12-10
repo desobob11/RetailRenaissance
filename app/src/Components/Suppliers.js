@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useState, useEffect, setState } from "react";
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import App, { tablify, parse_bool, theme, get_columns } from "../App";
 import Navbar from './Navbar';
@@ -15,22 +14,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columnsStateInitializer } from '@mui/x-data-grid/internals';
 import Button from '@mui/material/Button';
 import SuppliersPanel from './SuppliersPanel';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 
 
@@ -244,7 +231,17 @@ export default function Suppliers() {
                     name={selectedName}
                 >
                 </SuppliersPanel>
-                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+                <Typography align="right" marginRight="20vw" sx={{marginTop:"20px"}}>
+                    <Button component={Link} to="/createshipment" variant="contained" >
+                        Create Shipment
+                    </Button>
+                </Typography>
+                        <Typography align="right" marginRight="20vw" sx={{marginTop:"20px"}}>
+                    <Button component={Link} to="/allshipments" variant="contained" >
+                        Full Shipment List
+                    </Button>
+                </Typography>
+                <Typography variant="h4" marginLeft="10vw" marginTop="10px">
                     Supplier Summary
                 </Typography>
                 <DataGrid

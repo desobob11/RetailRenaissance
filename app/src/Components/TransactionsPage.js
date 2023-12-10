@@ -36,7 +36,9 @@ export default function Transactions() {
         // API call to refund the transaction
         // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
+
             prevRows.map(row => row.transaction_id === id ? { ...row, status: 'Cancelled' } : row)
+
         );
         console.log('Refund', id);
     };
@@ -45,7 +47,9 @@ export default function Transactions() {
         // API call to reorder the transaction
         // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
+
             prevRows.map(row => row.transaction_id === id ? { ...row, status: 'Pending' } : row)
+
         );
         console.log('Reorder', id);
     };
@@ -81,7 +85,9 @@ export default function Transactions() {
             sortable: false,
             renderCell: (params) => {
                 const { row } = params;
+
                 const { status, transaction_id } = row;
+
 
                 const onView = () => {
                     setSeletecedTransaction(row);
@@ -93,12 +99,16 @@ export default function Transactions() {
                         <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                             View
                         </Button>
+
                         {status === 'Complete' || status === 'Pending' ? (
+
                             <Button onClick={() => handleRefund(transaction_id)} color="secondary" variant="contained">
                                 Refund
                             </Button>
                         ) : null}
+
                         {status === 'Cancelled' ? (
+
                             <Button onClick={() => handleReorder(transaction_id)} color="secondary" variant="contained">
                                 Reorder
                             </Button>
@@ -114,7 +124,9 @@ export default function Transactions() {
 
     const createColumns = (data) => {
         const baseColumns = data.map(col => {
+
             if (col.field === 'status') { 
+
                 return { ...col, headerName: 'Status', cellClassName: getOrderStatusClassName };
             }
             if (col.field === 'amount') { 

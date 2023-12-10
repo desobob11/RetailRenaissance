@@ -19,7 +19,6 @@ import Button from '@mui/material/Button';
 
 
 
-
 const defaultTheme = createTheme();
 
 export default function Customers() {
@@ -30,12 +29,11 @@ export default function Customers() {
     const [totalOrder, setTotalOrder] = useState("");
     const [completed, setCompleted] = useState("");
     const [totalSales, setTotalSales] = useState("");
+
     const [customerRows, setCustomerRows] = useState([]);
     const [customerCols, setCustomerCols] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState({});
-  
-  
-  
+
     useEffect(() => {
         if (customerRows.length == 0) {
             get_customer_data()
@@ -88,7 +86,9 @@ export default function Customers() {
               </>
             );
           },
+
           width: 175 
+
         };
       };
 
@@ -118,15 +118,18 @@ export default function Customers() {
                 return { ...col, headerName: 'Sales',};
             }
             if (col.field === 'cancelled') { 
+
                 return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCancelledClassName };
             }
             if (col.field === 'completed') { 
                 return { ...col, headerName: 'Completed', cellClassName: getOrdersCompletedClassName };
+
             }
             return col;
         });
         const actionsColumn = createActionsColumn();
         baseColumns.push(actionsColumn);
+
         return baseColumns;
     };
 
@@ -150,8 +153,10 @@ export default function Customers() {
     }
 
 
+
     const totalOrders = selectedCustomer.completed + selectedCustomer.cancelled;
     
+
 
 
 
@@ -193,6 +198,7 @@ export default function Customers() {
                         borderRadius: "20px",
                         '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
                         '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
+
                     }}
                     onRowSelectionModelChange={(id) => {
                         // let record = userRows.filter((x) => {
@@ -204,9 +210,11 @@ export default function Customers() {
                         columnHeader: 'myGridHeader',
                         footer: 'myGridFooter',
                       }}
+
                 >
                 </DataGrid>
         </Box>
         </ThemeProvider>
+
     );
 }

@@ -83,7 +83,7 @@ export const mainListItems = (
                 </Box>
                 </Typography>} />
         </ListItemButton>
-        <ListItemButton  component={Link} to="/SignInSide">
+        <ListItemButton component={Link} to="/" onClick={() => { window.active_user_id = 0; alert(window.active_user_id);}}>
             <ListItemIcon>
             </ListItemIcon >
             <ListItemText primary={<Typography component="span">
