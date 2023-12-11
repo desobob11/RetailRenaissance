@@ -62,11 +62,14 @@ export default function SuppliersPanel(props) {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'145px'}}>
+            Supplier Details
+         </Typography>
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "0 auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",

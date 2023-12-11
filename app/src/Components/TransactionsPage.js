@@ -19,7 +19,7 @@ export default function Transactions() {
     const [TransactionsRow, setTransactionsRows] = useState([]);
     const [TransactionsCols, setTransactionsCols] = useState([]);
     const [selectedTransaction, setSeletecedTransaction] = useState({});
-   
+    const boldStyle = { fontWeight: 'bold', color: 'black' };
 
     const handleRefund = (id) => {
         setTransactionsRows(prevRows =>
@@ -168,8 +168,10 @@ export default function Transactions() {
                 alignContent: "center",
                 justifyContent: "center"
             }}>
-                Transactions Summary
-                <Box sx={{
+        <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft:'0px', marginTop: "-3%",}}>
+            Transactions Summary
+         </Typography>                
+         <Box sx={{
                     width: "85%",
                     height: "60vh",
                     background: "white",

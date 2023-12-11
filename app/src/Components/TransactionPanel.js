@@ -49,11 +49,14 @@ export default function DetailPanel(props) {
       return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'145px'}}>
+            Transaction Details
+         </Typography>   
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "0% auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",
@@ -63,7 +66,7 @@ export default function DetailPanel(props) {
                     alignItems: 'flex-start', // aligns items to the start of the flex container
 
                 }}
-            >                
+            >           
                 <Box sx={{ flex: 1, textAlign: 'center', padding: 2, marginTop: 2, }}> {/* Flex 1 for equal width */}
                     <Typography variant="h5" gutterBottom>
                         {props.firstName} {props.lastName} 

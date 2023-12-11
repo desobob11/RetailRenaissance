@@ -110,7 +110,6 @@ export default function Customers() {
                 return { ...col, headerName: 'Sales',};
             }
             if (col.field === 'cancelled') { 
-
                 return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCancelledClassName };
             }
             if (col.field === 'completed') { 
@@ -171,18 +170,34 @@ export default function Customers() {
                 email={selectedCustomer.email}
                 address={selectedCustomer.address}
                 totalOrder={totalOrders} 
+                totalSales={selectedCustomer.sales} 
                 completed={selectedCustomer.completed} 
                 cancelled={selectedCustomer.cancelled} 
                 >
                 </DetailPanel>
+                <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft:'140px', marginTop: "2%",}}>
+            Customer Summary
+         </Typography> 
                 <DataGrid
                     columns={customerCols}
                     rows={customerRows}
                     getRowId={(row) => row.customer_id}
+                    initialState={{
+                        columns: {
+                            columnVisibilityModel: {
+                                email: false,
+                                phone_num: false,
+                                address: false,
+                                sales: false,
+
+
+                            },
+                        },
+                    }}
                     sx={{
                         marginTop:"1%",
                         width: "80%",
-                        height: "1000px",
+                        height: "900px",
                         background: "white",
                         fontFamily: "Calibri",
                         marginLeft:"10%",

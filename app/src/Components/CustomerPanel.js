@@ -32,21 +32,26 @@ export default function DetailPanel(props) {
 
 
 
+
     useEffect(() => {
         setName(props.custName);
         setPhone(props.phone);
         setEmail(props.email);
         setAddress(props.address);
-      }, [props.custName, props.phone, props.email, props.address]);
+        setTotalSales(props.sales);
+      }, [props.custName, props.phone, props.email, props.address, props.sales]);
 
       return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'140px'}}>
+            Customer Details
+         </Typography>   
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "0% auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",
@@ -85,6 +90,9 @@ export default function DetailPanel(props) {
                  <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 2, marginLeft: 2, }}> 
                     <Typography variant="h6" gutterBottom>
                         ORDER DETAILS
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Total Sales:</span> {props.totalSales}
                     </Typography>
                     <Typography color="textSecondary">
                     <span style={boldStyle}>Total Order:</span> {props.totalOrder}

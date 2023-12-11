@@ -13,18 +13,7 @@ import "../styles.css";
 import Button from '@mui/material/Button';
 import { useNavigate, Link } from 'react-router-dom';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 export default function Products() {
     const [productsRow, setProductsRows] = useState([]);
@@ -35,6 +24,7 @@ export default function Products() {
            get_product_data();
         }
     }, [productsRow]);
+
 
     const get_product_data = () => {
        let paramString = `Product_get_all_data;;;()`;
@@ -75,6 +65,8 @@ export default function Products() {
         });
     };
 
+
+
     const getQuantityClassName = (params) => {
         const num_stock = params.row.num_stock;
         console.log(num_stock); // This will print the status for each row to the console
@@ -89,6 +81,7 @@ export default function Products() {
     };
 
     
+    
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -97,14 +90,15 @@ export default function Products() {
             <Grid className='background-grid' sx={{
                 alignContent: "center",
                 justifyContent: "center"
-            }}>
-
-                All Products
-                <Typography align="right" marginRight="20vw" marginBottom="1vh">
+            }}>          
+         <Typography align="right" marginRight="14vw" marginBottom={12}>
                     <Button component={Link} to="/addproduct" variant="contained" >
                         Add Product
                     </Button>
                 </Typography>
+                <Typography variant="h4" component="h2" gutterBottom style={{marginLeft:'0px', marginTop: "-11%",}}>
+            Products Summary
+         </Typography> 
                 <Box sx={{
                     width: "85%",
                     height: "60vh",
@@ -114,6 +108,7 @@ export default function Products() {
                     '& .row-midQuantity': { color: '#FF9900' }, // light yellow
                     '& .row-lowQuantity': { color: '#BB0000' }, // light red
                 }}>
+                    
                     <DataGrid 
                         columns={productsCols} 
                         rows={productsRow} 

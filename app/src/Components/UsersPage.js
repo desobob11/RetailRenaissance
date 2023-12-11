@@ -87,7 +87,7 @@ export default function UsersSummary() {
                 return { ...col, headerName: 'User ID', };
             }
             if (col.field === 'email') { 
-                return { ...col, headerName: '  Email', hideable: true};
+                return { ...col, headerName: '  Email', };
             }
             if (col.field === 'first_name') { 
                 return { ...col, headerName: 'First Name',};
@@ -125,7 +125,7 @@ export default function UsersSummary() {
             alignContent:"center",
             display:'in-line',
             width:"100vw",
-            height:"100vh"
+            height:"60vh"
         }}>
             <Navbar></Navbar>
                 <DetailPanel 
@@ -139,6 +139,9 @@ export default function UsersSummary() {
                 isManager={isManager}
                 >
                 </DetailPanel>
+                <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'145px'}}>
+            Users Summary
+         </Typography>
                 <DataGrid
                     columns={userCols}
                     rows={userRows}
@@ -157,7 +160,7 @@ export default function UsersSummary() {
                     sx={{
                         marginTop:"1%",
                         width: "80%",
-                        height: "1000px",
+                        height: "900px",
                         background: "white",
                         fontFamily: "Calibri",
                         marginLeft:"10%",
