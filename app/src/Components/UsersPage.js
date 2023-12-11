@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
 import { TableBody, TableHead, TableRow , Box} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import DetailPanel from './CustomerPanel'
+import DetailPanel from './UsersPanel'
 
 
 
@@ -28,14 +28,16 @@ export default function UsersSummary() {
     const [userRows, setUserRows] = useState([]);
     const [userCols, setUserCols] = useState([]);
     const [selectedUser, setSelectedUser] = useState({});
+    const [isManager, setIsManager] = useState(false);
+
 
 
     useEffect(() => {
         if (userRows.length == 0) {
             get_user_data()
         }
-   
-    }, []);
+        setIsManager(selectedUser.manager_id != null);
+    }, [selectedUser]);
 
     
 
@@ -59,25 +61,23 @@ export default function UsersSummary() {
 
     const createActionsColumn = () => {
         return {
-          field: 'actions',
-          headerName: 'Actions',
-          sortable: false,
-          renderCell: (params) => {
-            const onView = () => {
-              setSelectedUser(params.row);
-              console.log(params.row);
-            };
-            return (
-              <>
-                <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
-                  View
-                </Button>
-              </>
-            );
-          },
-          width: 100
+            field: 'actions',
+            headerName: 'Actions',
+            sortable: false,
+            renderCell: (params) => {
+                const onView = () => {
+                    setSelectedUser(params.row);
+                    setIsManager(params.row.manager_id != null); // Set isManager based on manager_id
+                };
+                return (
+                    <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
+                        View
+                    </Button>
+                );
+            },
+            width: 100
         };
-      };
+    };
 
 
 
@@ -85,9 +85,6 @@ export default function UsersSummary() {
         const baseColumns = data.map(col => {
             if (col.field === 'user_id') { 
                 return { ...col, headerName: 'User ID', };
-            }
-            if (col.field === 'phone_num') { 
-                return { ...col, headerName: 'Phone-Number',};
             }
             if (col.field === 'email') { 
                 return { ...col, headerName: '  Email', hideable: true};
@@ -107,42 +104,15 @@ export default function UsersSummary() {
             if (col.field === 'manager_branch_id') { 
                 return { ...col, headerName: 'Branch ID',};
             }
-            if (col.field === 'cancelled') { 
-                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
-            }
-            if (col.field === 'completed') { 
-                return { ...col, headerName: 'Completed', cellClassName: getOrdersCancelledClassName };
-            }
             return col;
         });
+
         const actionsColumn = createActionsColumn();
         baseColumns.push(actionsColumn);
 
         return baseColumns;
     };
-
-
-
-    const getOrdersCompletedClassName = (params) => {
-        const completed = params.row.completed;
-        console.log(completed); 
-        if (completed >= 0) {
-            return 'row-complete';
-        };
-    }
     
-
-    const getOrdersCancelledClassName = (params) => {
-        const cancelled = params.row.cancelled;
-        console.log(cancelled); 
-        if (cancelled >= 0 ) {
-            return 'row-cancelled';
-        };
-    }
-
-
-
-    const totalOrders = selectedUser.completed + selectedUser.cancelled;
 
 
     
@@ -159,12 +129,14 @@ export default function UsersSummary() {
         }}>
             <Navbar></Navbar>
                 <DetailPanel 
-                custName={selectedUser.first_name}
+                firstName={selectedUser.first_name}
                 lastName={selectedUser.last_name} 
                 user_id={selectedUser.user_id} 
-                phone={selectedUser.phone_num}
                 email={selectedUser.email}
-                address={selectedUser.address}
+                employee_date_hired={selectedUser.employee_date_hired}
+                manager_id={selectedUser.manager_id}
+                manager_branch_id={selectedUser.manager_branch_id}
+                isManager={isManager}
                 >
                 </DetailPanel>
                 <DataGrid
@@ -194,12 +166,6 @@ export default function UsersSummary() {
                         '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
                         '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
 
-                    }}
-                    onRowSelectionModelChange={(id) => {
-                        // let record = userRows.filter((x) => {
-                        //      return x.ID == id;
-                        //  })
-                        //  alert(JSON.stringify(record));
                     }}
                     classes={{
                         columnHeader: 'myGridHeader',

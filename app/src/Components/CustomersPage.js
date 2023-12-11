@@ -192,12 +192,6 @@ export default function Customers() {
                         '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
 
                     }}
-                    onRowSelectionModelChange={(id) => {
-                        // let record = userRows.filter((x) => {
-                        //      return x.ID == id;
-                        //  })
-                        //  alert(JSON.stringify(record));
-                    }}
                     classes={{
                         columnHeader: 'myGridHeader',
                         footer: 'myGridFooter',

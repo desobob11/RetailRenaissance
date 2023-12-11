@@ -15,29 +15,42 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columnsStateInitializer } from '@mui/x-data-grid/internals';
 
 
+
+
+
+// TODO remove, this demo shouldn't need to reset the theme.
+
 const defaultTheme = createTheme();
 
 export default function DetailPanel(props) {
     
     const boldStyle = { fontWeight: 'bold', color: 'black' };
 
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [totalOrder, setTotalOrder] = useState("");
-    const [completed, setCompleted] = useState("");
-    const [totalSales, setTotalSales] = useState("");
+    const [employee_date_hired, setEmployee_date_hired] = useState("");
+    const [manager_id, setManager_id] = useState("");
+    const [manager_branch_id, setManager_branch_id] = useState("");
+    const [isManager, setIsManager] = useState(false);
 
 
 
 
     useEffect(() => {
-        setName(props.custName);
-        setPhone(props.phone);
+        setFirstName(props.firstName);
+        setLastName(props.lastName);
         setEmail(props.email);
-        setAddress(props.address);
-      }, [props.custName, props.phone, props.email, props.address]);
+        setEmployee_date_hired(props.employee_date_hired);
+        setManager_id(props.manager_id);
+        setManager_branch_id(props.manager_branch_id);
+        setIsManager(props.isManager);
+      }, [props.firstName, props.lastName, props.email, props.employee_date_hired, props.manager_id, props.manager_branch_id, props.isManager]);
+
+
+
+
+
 
       return (
         <ThemeProvider theme={theme}>
@@ -56,46 +69,40 @@ export default function DetailPanel(props) {
                     alignItems: 'flex-start', // aligns items to the start of the flex container
 
                 }}
-            >
+            >                
                 <Box sx={{ flex: 1, textAlign: 'center', padding: 2, marginTop: 2, }}> {/* Flex 1 for equal width */}
                     <Typography variant="h5" gutterBottom>
-                        {props.custName} {props.lastName} 
+                        {props.firstName} {props.lastName} 
                     </Typography>
                     <Typography color="textSecondary">
-                    <span style={boldStyle}>Customer ID:</span> {props.customer_id}
+                    <span style={boldStyle}>User ID:</span> {props.user_id}
                     </Typography>
                 </Box>
-                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5, paddingRight: 2,}}> {/* Flex 2 for dbl wif */}
+                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
                     <Typography variant="h6" gutterBottom>
-                        PERSONAL INFORMATION
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Contact Number:</span> {props.phone}
+                        EMPLOYEE INFORMATION
                     </Typography>
                     <Typography color="textSecondary">
                     <span style={boldStyle}>Email:</span> {props.email}
                     </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Date Hired:</span> {props.employee_date_hired}
+                    </Typography>
                 </Box>
                 <Box sx={{ flex: 2, paddingLeft: 2, marginLeft: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                        SHIPPING ADDRESS
+                        EMPLOYEE STATUS 
                     </Typography>
-                    <Typography color="textSecondary">{props.address}</Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Manager:</span>  {isManager ? "Yes" : "No"}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Manager ID:</span>  {props.manager_id}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Branch ID:</span>  {props.manager_branch_id}
+                    </Typography>
                  </Box>
-                 <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 2, marginLeft: 2, }}> 
-                    <Typography variant="h6" gutterBottom>
-                        ORDER DETAILS
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Total Order:</span> {props.totalOrder}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Completed:</span> {props.completed}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Cancelled:</span> {props.cancelled}
-                    </Typography>
-                </Box>
             </Box>
         </ThemeProvider>
     );
