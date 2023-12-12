@@ -62,21 +62,35 @@ export default function SignInSide() {
 
     const sendLogin = (event) => {
         let paramString = `request_login;;;('${username}','${password}')`;
-        const options = {
+        var options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
             body: paramString,
         };
         fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
             let login_flag = result["result"][0]["@result"];
-            if (login_flag > 0) {
-                window.active_user_id = login_flag;
-                nav("/homepage");
+            window.active_user_id = login_flag;
+
+            paramString = `LOGIN_get_is_manager;;;(${window.active_user_id})`;
+            options = {
+                method: "POST",
+                headers: { "Content-Type": "text/plain" },
+                body: paramString,
+            };
+            fetch('http://127.0.0.1:8080/', options).then(response => response.json()).then(result => {
+                let manager_flag = result["result"][0]["@result"];
+                window.manager_id = manager_flag;
+            });
+
+            if (window.active_user_id > 0) {
+                nav("/homepage")
             }
             else {
                 alert("Invalid Credentials");
             }
+
         });
+
         
     }
 

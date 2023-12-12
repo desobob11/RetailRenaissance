@@ -33,6 +33,7 @@ const defaultTheme = createTheme();
 export var login_name = "";
 //export login_name;
 window.active_user_id = 0;
+window.manager_id = 0;
 export var logged_in = false;
 export var username = "";
 

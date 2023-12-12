@@ -21,110 +21,160 @@ import Box from '@mui/material/Box';
 import { useNavigate, Link } from 'react-router-dom';
 import List from '@mui/material/List';
 
-export const mainListItems = (
-    <React.Fragment>
-        <ListItemButton component={Link} to="/homepage">
-            <ListItemIcon>
-                <HouseIcon className="icon"/>
-            </ListItemIcon>
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Home
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to= "/Products">
-            <ListItemIcon>
-                <ShoppingCartIcon className="icon"  />
-            </ListItemIcon>
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Products
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to= "/Transactions">
-            <ListItemIcon>
-                <ReceiptIcon className="icon" />
-            </ListItemIcon>
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Transactions
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to="/customers">
-            <ListItemIcon>
-                <PeopleIcon className="icon" />
-            </ListItemIcon >
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text"t>
-                    Customers
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to="/suppliers">
-            <ListItemIcon>
-                <LocalShippingIcon className="icon" />
-            </ListItemIcon >
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Suppliers
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to="/users">
-            <ListItemIcon>
-                <AdminPanelSettingsIcon className="icon" />
-            </ListItemIcon>
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Users
-                </Box>
-                </Typography>} />
-        </ListItemButton>
-        <ListItemButton component={Link} to="/" onClick={() => { window.active_user_id = 0; alert(window.active_user_id);}}>
-            <ListItemIcon>
-            </ListItemIcon >
-            <ListItemText primary={<Typography component="span">
-                <Box className="navbar-text">
-                    Logout
-                </Box>
-            </Typography>} />
-        </ListItemButton>
-    </React.Fragment>
-);
-
-export const secondaryListItems = (
-    <React.Fragment>
-        <ListSubheader component="div" inset>
-            Saved reports
-        </ListSubheader>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Current month" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Last quarter" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
-        </ListItemButton>
-    </React.Fragment>
-);
 
 
 
 
 export default function Navbar() {
+    var mainListItems = undefined;
+    if (window.manager_id > 0) {
+
+    
+    mainListItems = (
+
+        <React.Fragment>
+            <ListItemButton component={Link} to="/homepage">
+                <ListItemIcon>
+                    <HouseIcon className="icon" />
+                </ListItemIcon>
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Home
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/Products">
+                <ListItemIcon>
+                    <ShoppingCartIcon className="icon" />
+                </ListItemIcon>
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Products
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/Transactions">
+                <ListItemIcon>
+                    <ReceiptIcon className="icon" />
+                </ListItemIcon>
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Transactions
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/customers">
+                <ListItemIcon>
+                    <PeopleIcon className="icon" />
+                </ListItemIcon >
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text" t>
+                        Customers
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/suppliers">
+                <ListItemIcon>
+                    <LocalShippingIcon className="icon" />
+                </ListItemIcon >
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Suppliers
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/users">
+                <ListItemIcon>
+                    <AdminPanelSettingsIcon className="icon" />
+                </ListItemIcon>
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Users
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+            <ListItemButton component={Link} to="/" onClick={() => { window.active_user_id = 0; window.manager_id = 0; }}>
+                <ListItemIcon>
+                </ListItemIcon >
+                <ListItemText primary={<Typography component="span">
+                    <Box className="navbar-text">
+                        Logout
+                    </Box>
+                </Typography>} />
+            </ListItemButton>
+        </React.Fragment>
+    );
+    }
+    else {
+
+        mainListItems = (
+
+            <React.Fragment>
+                <ListItemButton component={Link} to="/homepage">
+                    <ListItemIcon>
+                        <HouseIcon className="icon" />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text">
+                            Home
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/Products">
+                    <ListItemIcon>
+                        <ShoppingCartIcon className="icon" />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text">
+                            Products
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/Transactions">
+                    <ListItemIcon>
+                        <ReceiptIcon className="icon" />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text">
+                            Transactions
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/customers">
+                    <ListItemIcon>
+                        <PeopleIcon className="icon" />
+                    </ListItemIcon >
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text" t>
+                            Customers
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/suppliers">
+                    <ListItemIcon>
+                        <LocalShippingIcon className="icon" />
+                    </ListItemIcon >
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text">
+                            Suppliers
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/" onClick={() => { window.active_user_id = 0; window.manager_id = 0; }}>
+                    <ListItemIcon>
+                    </ListItemIcon >
+                    <ListItemText primary={<Typography component="span">
+                        <Box className="navbar-text">
+                            Logout
+                        </Box>
+                    </Typography>} />
+                </ListItemButton>
+            </React.Fragment>
+        );
+    }
+
+
+
     return (<List
         sx={{
             width: "100%",
