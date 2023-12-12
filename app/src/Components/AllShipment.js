@@ -52,13 +52,16 @@ export default function AllShipments() {
                 justifyContent: "center"
             }}>
 
-                All Shipments
-                <Typography align="right" marginRight="20vw" marginBottom="1vh">
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'0px'}}>
+            All Shipments         
+            </Typography>                  
+            <Typography align="right" marginRight="26vh" marginBottom="1vh" marginTop="-4.2%">
                     <Button variant="contained" component={Link} to="/suppliers">
                         Suppliers Summary
                     </Button>
                 </Typography>
                 <Box sx={{
+                    marginTop: '1%',
                     width: "85%",
                     height: "60vh",
                     background: "white",

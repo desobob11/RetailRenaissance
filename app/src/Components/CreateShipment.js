@@ -183,51 +183,23 @@ export default function CreateShipment() {
             <Navbar />
             <Grid className='background-grid' width={"100vw"} sx={{
                 alignContent: "center",
-                justifyContent: "center"
-            }}>
-
-                Place a Shipment
-                <Typography align="right" marginRight="20vw" marginBottom="1vh">
-                    <Button variant="contained" component={Link} to="/suppliers">
-                        Suppliers Summary
-                    </Button>
-                </Typography>
-                <Grid item display={"inline-block"}>
-                <Box sx={{
-                    width: "20vw",
-                    height: "60vh",
-                    background: "white",
-                    fontFamily: "Calibri",
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: "40px",
-                    borderRadius: "20px",
-                    '& .row-highQuantity': { color: '#00BB00' }, // light green
-                    '& .row-midQuantity': { color: '#FF9900' }, // light yellow
-                    '& .row-lowQuantity': { color: '#BB0000' }, // light red
+                justifyContent: "center",
                 }}>
-                    <FormControl>
-                        <InputLabel sx={{ width: "150%", marginLeft: "20px", marginTop:"20px" }}>Warehouse Id</InputLabel>
-                            <Select sx={{ width: "150px", marginLeft: "20px", marginTop: "20px" }} onChange={handleWarehouse}
-                            label="Warehouse ID">
-                            {idList.map((val) => {
-                                return <MenuItem value={val}>{val}</MenuItem>
-                            })}
-                        </Select>
-                    </FormControl>
-        
-                </Box>
-                </Grid>
-
                 <Grid item display={"inline-block"}>
+                </Grid>
+                <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '-5%', marginLeft:'0px', }}>
+            Add Product Manually        
+            </Typography>  
+                <Grid >
                     <Box sx={{
-                        width: "20vw",
+                        marginTop: "1%",
+                        width: "30vw",
                         height: "60vh",
                         background: "white",
                         fontFamily: "Calibri",
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: "40px",
+                        gap: "10px",
                         borderRadius: "20px",
                         '& .row-highQuantity': { color: '#00BB00' }, // light green
                         '& .row-midQuantity': { color: '#FF9900' }, // light yellow
@@ -238,34 +210,46 @@ export default function CreateShipment() {
                                 renderInput={(params) => <TextField {...params} label="Product" />}
                                 >                                    
                             </Autocomplete>
-                        <Autocomplete sx={{ width: "300px", marginLeft: "20px", marginTop: "20px" }} onInputChange={handleCountBox}
+                        <Autocomplete sx={{ width: "300px", marginLeft: "20px", }} onInputChange={handleCountBox}
                                 options={amounts}
                                 renderInput={(params) => <TextField {...params} label="Count of Products" />}
                             >
                             </Autocomplete>
-
-                        <Typography align="left" marginLeft="20px">
+                            <FormControl>
+                        <InputLabel sx={{ width: "150%", marginLeft: "20px", }}>Warehouse Id</InputLabel>
+                            <Select sx={{ width: "150px", marginLeft: "20px", }} onChange={handleWarehouse}
+                            label="Warehouse ID">
+                            {idList.map((val) => {
+                                return <MenuItem value={val}>{val}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                        <Typography align="left" marginLeft="20px" marginTop ="30px">
                             <Button variant="contained" onClick={addItem}>
                                 Add Item
                             </Button>
                         </Typography>
-                        <Typography align="left" marginLeft="20px">
+                        <Typography align="left" marginLeft="20px" marginTop= "10px">
                             <Button variant="contained" onClick={confirm_shipment}>
                                 Confirm Shipment
                             </Button>
                         </Typography>
+                        <Typography align="left" marginRight="25px" marginTop= "10px" marginLeft="20px"  >
+                    <Button variant="contained" component={Link} to="/suppliers">
+                        Suppliers Summary
+                    </Button>
+                </Typography>
                     </Box>
                 </Grid>
-                <Grid item display="inline-block">
+                <Grid >
                     <DataGrid
                         columns={cols}
                         rows={rows}
-                        sx={{ width: "30vw", height: "60vh", backgroundColor: "white", borderRadius: "20px"}}
+                        sx={{ width: "50vw", height: "60vh", backgroundColor: "white", borderRadius: "20px", marginLeft:"60vh",  marginTop: "-31.7%", }}
                         getRowId={(row) => row.id}
                         
                     />
                 </Grid>
-                
             </Grid>
         </ThemeProvider>
     );

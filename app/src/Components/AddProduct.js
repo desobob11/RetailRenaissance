@@ -146,6 +146,7 @@ export default function AddProduct() {
         return baseColumns;
     };
 
+    
     const getQuantityClassName = (params) => {
         const num_stock = params.row.num_stock;
         console.log(num_stock); // This will print the status for each row to the console

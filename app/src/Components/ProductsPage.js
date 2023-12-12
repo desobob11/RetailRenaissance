@@ -113,10 +113,6 @@ export default function Products() {
                         columns={productsCols} 
                         rows={productsRow} 
                         getRowId={(row) => row.product_id} // Adjust to your data's unique identifier
-                        onRowSelectionModelChange={(id) => {
-                            let record = productsRow.filter((x) => x.ID == id);
-                            alert(JSON.stringify(record));
-                         }}
                          classes={{
                             columnHeader: 'myGridHeader',
                             footer: 'myGridFooter',
