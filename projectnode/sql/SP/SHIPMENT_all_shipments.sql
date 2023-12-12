@@ -1,0 +1,7 @@
+DELIMITER $$
+CREATE PROCEDURE SHIPMENT_all_shipments()
+BEGIN
+SELECT * FROM shipment ORDER BY shipment_id DESC;
+END
+$$
+DELIMITER ;
