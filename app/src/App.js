@@ -14,9 +14,6 @@ import { ThemeProvider, createMuiTheme, createTheme } from '@mui/material/styles
 import CssBaseline from '@mui/material/CssBaseline';
 import Reports from './Components/Reports';
 import Suppliers from './Components/Suppliers';
-import AddProduct from './Components/AddProduct';
-import CreateShipment from './Components/CreateShipment';
-import AllShipments from './Components/AllShipment';
 
 const defaultTheme = createTheme();
 
@@ -32,7 +29,7 @@ const defaultTheme = createTheme();
 
 export var login_name = "";
 //export login_name;
-window.active_user_id = 0;
+
 export var logged_in = false;
 export var username = "";
 
@@ -76,11 +73,10 @@ export const theme = createTheme({
 
 export function parse_bool(response) {
   try {
-    return response["result"][0]["@result"];
+    return response["@result"];
   }
   // server response not received
   catch (error) {
-    alert(error)
     return -1;
   }
 }
@@ -102,9 +98,8 @@ function App() {
           <Route path="/transactions" element={<Transactions/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/addproduct" element={<AddProduct />} />
-          <Route path="/createshipment" element={<CreateShipment />} />
-          <Route path="/allshipments" element={<AllShipments />} />
+      
+
 
         </Routes>
       </Router>

@@ -18,6 +18,23 @@ import Button from '@mui/material/Button';
 
 
 
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://mui.com/">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+
+
+
+// TODO Deactivate, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -33,6 +50,7 @@ export default function Customers() {
     const [customerRows, setCustomerRows] = useState([]);
     const [customerCols, setCustomerCols] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState({});
+
 
     useEffect(() => {
         if (customerRows.length == 0) {
@@ -86,9 +104,7 @@ export default function Customers() {
               </>
             );
           },
-
-          width: 175 
-
+          width: 225
         };
       };
 
@@ -118,12 +134,10 @@ export default function Customers() {
                 return { ...col, headerName: 'Sales',};
             }
             if (col.field === 'cancelled') { 
-
-                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCancelledClassName };
+                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
             }
             if (col.field === 'completed') { 
-                return { ...col, headerName: 'Completed', cellClassName: getOrdersCompletedClassName };
-
+                return { ...col, headerName: 'Completed', cellClassName: getOrdersCancelledClassName };
             }
             return col;
         });
@@ -155,10 +169,9 @@ export default function Customers() {
 
 
     const totalOrders = selectedCustomer.completed + selectedCustomer.cancelled;
+
+
     
-
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -214,7 +227,10 @@ export default function Customers() {
                 >
                 </DataGrid>
         </Box>
+
+
         </ThemeProvider>
+
 
     );
 }
