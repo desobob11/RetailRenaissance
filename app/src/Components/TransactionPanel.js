@@ -89,6 +89,20 @@ export default function DetailPanel(props) {
                     <span style={boldStyle}>Amount:</span> {props.amount}
                     </Typography>
                 </Box>
+                  <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 5 }}> {/* Flex 2 for dbl wif */}
+                      <Typography variant="h6" gutterBottom>
+                          CUSTOMER INFORMATION
+                      </Typography>
+                      <Typography color="textSecondary">
+                          <span style={boldStyle}>Email:</span> {props.email}
+                      </Typography>
+                      <Typography color="textSecondary">
+                          <span style={boldStyle}>Contact Number:</span> {props.phone_num}
+                      </Typography>
+                      <Typography color="textSecondary">
+                          <span style={boldStyle}>Shipping Address:</span> {props.address}
+                      </Typography>
+                  </Box>
             </Box>
         </ThemeProvider>
     );
