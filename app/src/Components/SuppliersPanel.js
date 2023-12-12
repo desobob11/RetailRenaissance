@@ -85,7 +85,6 @@ export default function SuppliersPanel(props) {
                         {props["name"]}
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Supplier ID: </span> {props["id"]}
                     </Typography>
                 </Box>
                 <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5 }}> {/* Flex 2 for dbl wif */}

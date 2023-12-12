@@ -27,7 +27,7 @@ export default function Products() {
 
 
     const get_product_data = () => {
-       let paramString = `Product_get_all_data;;;()`;
+       let paramString = `PRODUCT_get_all_data;;;()`;
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
@@ -91,7 +91,7 @@ export default function Products() {
                 alignContent: "center",
                 justifyContent: "center"
             }}>          
-         <Typography align="right" marginRight="14vw" marginBottom={12}>
+         <Typography align="right" marginRight="14vw" marginBottom={"8%"}>
                     <Button component={Link} to="/addproduct" variant="contained" >
                         Add Product
                     </Button>
@@ -113,10 +113,7 @@ export default function Products() {
                         columns={productsCols} 
                         rows={productsRow} 
                         getRowId={(row) => row.product_id} // Adjust to your data's unique identifier
-                        onRowSelectionModelChange={(id) => {
-                            let record = productsRow.filter((x) => x.ID == id);
-                            alert(JSON.stringify(record));
-                         }}
+
                          classes={{
                             columnHeader: 'myGridHeader',
                             footer: 'myGridFooter',
