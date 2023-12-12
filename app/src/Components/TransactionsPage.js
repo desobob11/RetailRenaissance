@@ -49,22 +49,22 @@ export default function Transactions() {
 
 
     const get_transactions_data = () => {
-       let paramString = `TRANSACTION_get_all_data;;;()`;
+        let paramString = `TRANSACTION_get_all_data;;;()`;
         const options = {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
             body: paramString,
         };
         fetch('http://127.0.0.1:8080/', options)
-          .then(response => response.json())
-          .then(result => {
-              setTransactionsRows(result["result"]);
-              setTransactionsCols(createColumns(get_columns(result["result"])));
-          });
+            .then(response => response.json())
+            .then(result => {
+                setTransactionsRows(result["result"]);
+                setTransactionsCols(createColumns(get_columns(result["result"])));
+            });
     };
 
 
-    
+
 
     const createActionsColumn = () => {
         return {
@@ -110,21 +110,21 @@ export default function Transactions() {
     const createColumns = (data) => {
         const baseColumns = data.map(col => {
 
-            if (col.field === 'status') { 
+            if (col.field === 'status') {
 
                 return { ...col, headerName: 'Status', cellClassName: getOrderStatusClassName };
             }
-            if (col.field === 'amount') { 
-                return { ...col, headerName: 'Amount',};
+            if (col.field === 'amount') {
+                return { ...col, headerName: 'Amount', };
             }
-            if (col.field === 'customer_id') { 
-                return { ...col, headerName: 'Customer ID',};
+            if (col.field === 'customer_id') {
+                return { ...col, headerName: 'Customer ID', };
             }
-            if (col.field === 'transaction_id') { 
-                return { ...col, headerName: 'Transaction ID',};
+            if (col.field === 'transaction_id') {
+                return { ...col, headerName: 'Transaction ID', };
             }
-            if (col.field === 'transaction_date') { 
-                return { ...col, headerName: 'Date',};
+            if (col.field === 'transaction_date') {
+                return { ...col, headerName: 'Date', };
             }
             return col;
         });
@@ -147,20 +147,23 @@ export default function Transactions() {
         return '';
     };
 
-    
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Navbar />
             {selectedTransaction && selectedTransaction.transaction_id && (
-                <DetailPanel 
-                  transactionId={selectedTransaction.transaction_id}
-                  customer_id={selectedTransaction.customer_id}
-                  firstName={selectedTransaction.first_name}
-                  lastName={selectedTransaction.last_name} 
-                  transaction_id={selectedTransaction.transaction_id} 
-                  amount={selectedTransaction.amount}
-                  transaction_date={selectedTransaction.transaction_date}
+                <DetailPanel
+                    transactionId={selectedTransaction.transaction_id}
+                    customer_id={selectedTransaction.customer_id}
+                    firstName={selectedTransaction.first_name}
+                    lastName={selectedTransaction.last_name}
+                    transaction_id={selectedTransaction.transaction_id}
+                    amount={selectedTransaction.amount}
+                    transaction_date={selectedTransaction.transaction_date}
+                    phone_num={selectedTransaction.phone_num}
+                    email={selectedTransaction.email}
+                    address={selectedTransaction.address}
 
                 />
             )}
@@ -168,10 +171,10 @@ export default function Transactions() {
                 alignContent: "center",
                 justifyContent: "center"
             }}>
-        <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft:'0px', marginTop: "-3%",}}>
-            Transactions Summary
-         </Typography>                
-         <Box sx={{
+                <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft: '0px', marginTop: "-3%", }}>
+                    Transactions Summary
+                </Typography>
+                <Box sx={{
                     width: "85%",
                     height: "60vh",
                     background: "white",
@@ -180,23 +183,29 @@ export default function Transactions() {
                     '& .row-pending': { backgroundColor: '#FFFFE0' }, // light yellow
                     '& .row-cancelled': { backgroundColor: '#FFC0CB' }, // light red
                 }}>
-                    <DataGrid 
-                        columns={TransactionsCols} 
-                        rows={TransactionsRow} 
+                    <DataGrid
+                        columns={TransactionsCols}
+                        rows={TransactionsRow}
                         getRowId={(row) => row.transaction_id} // Adjust to your data's unique identifier
                         initialState={{
                             columns: {
                                 columnVisibilityModel: {
-                                    transaction_date: false,
-                                    customer_id: false,    
+            
+                                    customer_id: false,
+                                    phone_num: false,
+                                    email: false,
+                                    address: false,
+                                    first_name: false,
+                                    last_name: false
+
                                 },
                             },
                         }}
-                         classes={{
+                        classes={{
                             columnHeader: 'myGridHeader',
                             footer: 'myGridFooter',
-                          }}
-                  />
+                        }}
+                    />
                 </Box>
             </Grid>
         </ThemeProvider>
