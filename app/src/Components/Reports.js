@@ -306,7 +306,10 @@ export default function Reports() {
                         border: "none",
                         borderRadius:"20px"
                     }}
-
+                    classes={{
+                        columnHeader: 'myGridHeader',
+                        footer: 'myGridFooter',
+                      }}
 
                 >
                     

@@ -89,22 +89,18 @@ export default function Customers() {
               setSelectedCustomer(params.row);
               console.log(params.row);
             };
-            const onDeactivate = () => {
-              // Implement im not done but im assuming you gotta be like call an API to Deactivate the data from the database havent gotten here yet 
-              console.log('Deactivate', params.row);
-            };
             return (
               <>
                 <Button onClick={onView} color="primary" variant="contained" style={{ marginRight: '8px' }}>
                   View
                 </Button>
-                <Button onClick={onDeactivate} color="secondary" variant="contained">
-                  Deactivate
-                </Button>
               </>
             );
           },
-          width: 225
+
+
+          width: 100
+
         };
       };
 
@@ -134,7 +130,9 @@ export default function Customers() {
                 return { ...col, headerName: 'Sales',};
             }
             if (col.field === 'cancelled') { 
-                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCompletedClassName };
+
+                return { ...col, headerName: 'Cancelled', cellClassName: getOrdersCancelledClassName };
+
             }
             if (col.field === 'completed') { 
                 return { ...col, headerName: 'Completed', cellClassName: getOrdersCancelledClassName };
@@ -192,18 +190,34 @@ export default function Customers() {
                 email={selectedCustomer.email}
                 address={selectedCustomer.address}
                 totalOrder={totalOrders} 
+                totalSales={selectedCustomer.sales} 
                 completed={selectedCustomer.completed} 
                 cancelled={selectedCustomer.cancelled} 
                 >
                 </DetailPanel>
+                <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft:'140px', marginTop: "2%",}}>
+            Customer Summary
+         </Typography> 
                 <DataGrid
                     columns={customerCols}
                     rows={customerRows}
                     getRowId={(row) => row.customer_id}
+                    initialState={{
+                        columns: {
+                            columnVisibilityModel: {
+                                email: false,
+                                phone_num: false,
+                                address: false,
+                                sales: false,
+
+
+                            },
+                        },
+                    }}
                     sx={{
                         marginTop:"1%",
                         width: "80%",
-                        height: "1000px",
+                        height: "900px",
                         background: "white",
                         fontFamily: "Calibri",
                         marginLeft:"10%",
@@ -212,12 +226,6 @@ export default function Customers() {
                         '& .row-complete': { backgroundColor: '#C8E6C9' }, // light green
                         '& .row-cancelled': { backgroundColor: '#FFCDD2' }, // light red
 
-                    }}
-                    onRowSelectionModelChange={(id) => {
-                        // let record = userRows.filter((x) => {
-                        //      return x.ID == id;
-                        //  })
-                        //  alert(JSON.stringify(record));
                     }}
                     classes={{
                         columnHeader: 'myGridHeader',

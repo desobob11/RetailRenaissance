@@ -13,28 +13,15 @@ import App, { get_columns, theme } from "../App";
 import Navbar from './Navbar';
 import "../styles.css";
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 export default function Transactions() {
     const [TransactionsRow, setTransactionsRows] = useState([]);
     const [TransactionsCols, setTransactionsCols] = useState([]);
     const [selectedTransaction, setSeletecedTransaction] = useState({});
-   
+    const boldStyle = { fontWeight: 'bold', color: 'black' };
 
     const handleRefund = (id) => {
-        // API call to refund the transaction
-        // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
             prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Cancelled' } : row)
         );
@@ -42,8 +29,6 @@ export default function Transactions() {
     };
 
     const handleReorder = (id) => {
-        // API call to reorder the transaction
-        // Update the state to reflect the new status
         setTransactionsRows(prevRows =>
             prevRows.map(row => row.transaction_id === id ? { ...row, order_status: 'Pending' } : row)
         );
@@ -74,6 +59,9 @@ export default function Transactions() {
           });
     };
 
+
+    
+
     const createActionsColumn = () => {
         return {
             field: 'actions',
@@ -81,10 +69,11 @@ export default function Transactions() {
             sortable: false,
             renderCell: (params) => {
                 const { row } = params;
-                const { order_status, transaction_id } = row;
+
+                const { status, transaction_id } = row;
 
                 const onView = () => {
-                    setSeletecedTransaction(row);
+                    setSeletecedTransaction(params.row);
                     console.log('View', row);
                 };
 
@@ -152,21 +141,23 @@ export default function Transactions() {
             {selectedTransaction && selectedTransaction.transaction_id && (
                 <DetailPanel 
                   transactionId={selectedTransaction.transaction_id}
-                  userId={selectedTransaction.user_id}
-                  custName={selectedTransaction.first_name}
+                  customer_id={selectedTransaction.customer_id}
+                  firstName={selectedTransaction.first_name}
                   lastName={selectedTransaction.last_name} 
-                  user_id={selectedTransaction.user_id} 
-                  phone={selectedTransaction.phone_num}
-                  email={selectedTransaction.email}
-                  address={selectedTransaction.address}
+                  transaction_id={selectedTransaction.transaction_id} 
+                  amount={selectedTransaction.amount}
+                  transaction_date={selectedTransaction.transaction_date}
+
                 />
             )}
             <Grid className='background-grid' sx={{
                 alignContent: "center",
                 justifyContent: "center"
             }}>
-                Transactions Summary
-                <Box sx={{
+        <Typography variant="h4" component="h2" gutterBottom style={{ marginLeft:'0px', marginTop: "-3%",}}>
+            Transactions Summary
+         </Typography>                
+         <Box sx={{
                     width: "85%",
                     height: "60vh",
                     background: "white",
@@ -179,10 +170,14 @@ export default function Transactions() {
                         columns={TransactionsCols} 
                         rows={TransactionsRow} 
                         getRowId={(row) => row.transaction_id} // Adjust to your data's unique identifier
-                        onRowSelectionModelChange={(id) => {
-                            let record = TransactionsRow.filter((x) => x.ID == id);
-                            alert(JSON.stringify(record));
-                         }}
+                        initialState={{
+                            columns: {
+                                columnVisibilityModel: {
+                                    transaction_date: false,
+                                    customer_id: false,    
+                                },
+                            },
+                        }}
                          classes={{
                             columnHeader: 'myGridHeader',
                             footer: 'myGridFooter',

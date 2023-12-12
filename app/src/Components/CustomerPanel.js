@@ -15,25 +15,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columnsStateInitializer } from '@mui/x-data-grid/internals';
 
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
-
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function DetailPanel(props) {
@@ -50,23 +31,27 @@ export default function DetailPanel(props) {
 
 
 
-// i didnt add alot of thme as props but they still print so idk, ex : customer_id  
+
 
     useEffect(() => {
         setName(props.custName);
         setPhone(props.phone);
         setEmail(props.email);
         setAddress(props.address);
-      }, [props.custName, props.phone, props.email, props.address]);
+        setTotalSales(props.sales);
+      }, [props.custName, props.phone, props.email, props.address, props.sales]);
 
       return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'140px'}}>
+            Customer Details
+         </Typography>   
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "0% auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",
@@ -85,7 +70,7 @@ export default function DetailPanel(props) {
                     <span style={boldStyle}>Customer ID:</span> {props.customer_id}
                     </Typography>
                 </Box>
-                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
+                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5, paddingRight: 2,}}> {/* Flex 2 for dbl wif */}
                     <Typography variant="h6" gutterBottom>
                         PERSONAL INFORMATION
                     </Typography>
@@ -93,13 +78,7 @@ export default function DetailPanel(props) {
                     <span style={boldStyle}>Contact Number:</span> {props.phone}
                     </Typography>
                     <Typography color="textSecondary">
-                    <span style={boldStyle}>Gender:</span> {props.gender}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Date of Birth:</span> {props.dob}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Member Since:</span> {props.memberSince}
+                    <span style={boldStyle}>Email:</span> {props.email}
                     </Typography>
                 </Box>
                 <Box sx={{ flex: 2, paddingLeft: 2, marginLeft: 2 }}>
@@ -111,6 +90,9 @@ export default function DetailPanel(props) {
                  <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 2, marginLeft: 2, }}> 
                     <Typography variant="h6" gutterBottom>
                         ORDER DETAILS
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Total Sales:</span> {props.totalSales}
                     </Typography>
                     <Typography color="textSecondary">
                     <span style={boldStyle}>Total Order:</span> {props.totalOrder}

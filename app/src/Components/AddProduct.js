@@ -170,13 +170,16 @@ export default function AddProduct() {
                 justifyContent: "center"
             }}>
 
-                Add a Product Manually
-                <Typography align="right" marginRight="20vw" marginBottom="1vh">
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'0px'}}>
+            Add Product Manually        
+            </Typography>  
+                <Typography align="right" marginRight="14vw" marginTop="-4%">
                     <Button variant="contained" component={Link} to="/products">
                         Products Summary
                     </Button>
                 </Typography>
                 <Box sx={{
+                    marginTop: '1%',
                     width: "85%",
                     height: "60vh",
                     background: "white",

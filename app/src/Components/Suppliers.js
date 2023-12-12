@@ -62,8 +62,6 @@ export default function Suppliers() {
     const [supplierRows, setSupplierRows] = useState([]);
     const [supplierCols, setSupplierCols] = useState([]);
 
-
-
     useEffect(() => {
         if (supplierRows.length == 0) {
             get_supplier_data()
@@ -244,7 +242,19 @@ export default function Suppliers() {
                     name={selectedName}
                 >
                 </SuppliersPanel>
-                <Typography variant="h4" marginLeft="10vw" marginTop="5vh">
+
+                <Typography align="right" marginRight="10vw" marginBottom={-4.6} sx={{marginTop:'3%'}} >
+                    <Button component={Link} to="/createshipment" variant="contained" >
+                        Create Shipment
+                    </Button>
+                </Typography>
+                        <Typography align="right" marginRight="23vw" marginBottom={-8}>
+                    <Button component={Link} to="/allshipments" variant="contained" >
+                        Full Shipment List
+                    </Button>
+                </Typography>
+                <Typography variant="h4" marginLeft="10vw" marginTop="1%" >
+
                     Supplier Summary
                 </Typography>
                 <DataGrid

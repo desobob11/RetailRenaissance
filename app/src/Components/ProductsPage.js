@@ -14,18 +14,7 @@ import "../styles.css";
 import Button from '@mui/material/Button';
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 export default function Products() {
     const [productsRow, setProductsRows] = useState([]);
@@ -33,9 +22,12 @@ export default function Products() {
 
     useEffect(() => {
         if (productsRow.length === 0) {
-            get_product_data();
+
+           get_product_data();
+
         }
     }, [productsRow]);
+
 
     const get_product_data = () => {
        let paramString = `Product_get_all_data;;;()`;
@@ -54,31 +46,9 @@ export default function Products() {
 
 
 
-    const createActionsColumn = () => {
-        return {
-          field: 'actions',
-          headerName: 'Actions',
-          sortable: false,
-          filterable: false,
-          renderCell: (params) => {
-            const onDeactivate = () => {
-              // Implement  remove logic here, e.g. call an API to remove the data from the database
-              console.log('Deactivate', params.row);
-            };
-            return (
-              <>
-                <Button onClick={onDeactivate} color="secondary" variant="contained">
-                  Deactivate
-                </Button>
-              </>
-            );
-          },
-          width: 125 // Adjust the width as needed
-        };
-      };
 
     const createColumns = (data) => {
-        const baseColumns = data.map(col => {
+        return data.map(col => {
             if (col.field === 'num_stock') { 
                 return { ...col, headerName: 'Current Stock', cellClassName: getQuantityClassName };
             }
@@ -96,10 +66,9 @@ export default function Products() {
             }
             return col;
         });
-        const actionsColumn = createActionsColumn();
-        baseColumns.push(actionsColumn);
-        return baseColumns;
     };
+
+
 
     const getQuantityClassName = (params) => {
         const num_stock = params.row.num_stock;
@@ -115,6 +84,7 @@ export default function Products() {
     };
 
     
+    
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -122,8 +92,17 @@ export default function Products() {
             <Grid className='background-grid' sx={{
                 alignContent: "center",
                 justifyContent: "center"
-            }}>
-                All Products
+
+            }}>          
+         <Typography align="right" marginRight="14vw" marginBottom={12}>
+                    <Button component={Link} to="/addproduct" variant="contained" >
+                        Add Product
+                    </Button>
+                </Typography>
+                <Typography variant="h4" component="h2" gutterBottom style={{marginLeft:'0px', marginTop: "-11%",}}>
+            Products Summary
+         </Typography> 
+
                 <Box sx={{
                     width: "85%",
                     height: "60vh",
@@ -133,6 +112,7 @@ export default function Products() {
                     '& .row-midQuantity': { color: '#FF9900' }, // light yellow
                     '& .row-lowQuantity': { color: '#BB0000' }, // light red
                 }}>
+                    
                     <DataGrid 
                         columns={productsCols} 
                         rows={productsRow} 

@@ -16,6 +16,8 @@ import { columnsStateInitializer } from '@mui/x-data-grid/internals';
 
 
 
+
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -24,38 +26,37 @@ export default function DetailPanel(props) {
     
     const boldStyle = { fontWeight: 'bold', color: 'black' };
 
-    const [orderItems, setOrderItems] = useState([]);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [amount, setAmount] = useState("");
+    const [transaction_date, setTransactionDate] = useState("");
+
+
+
 
     useEffect(() => {
-        if (props.order && props.order.items) {
-            setOrderItems(props.order.items);
-        }
-    }, [props.order]);
+        setFirstName(props.firstName);
+        setLastName(props.lastName);
+        setAmount(props.amount);
+        setTransactionDate(props.transaction_date);
+      }, [props.firstName, props.lastName, props.amount, props.employee_date_hired, props.manager_id, props.transaction_date,]);
 
 
-    // Function to calculate subtotal and total
-    const calculateTotals = () => {
-        const shippingFee = 10; // Flat shipping fee
-        const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
-        const tax = subtotal * 0.05;
-        const total = subtotal + shippingFee + tax;
-        return { subtotal, shippingFee, total, tax };
-    };
-
-    
-    // Destructure calculated totals
-    const { subtotal, shippingFee, total } = calculateTotals();
 
 
-    
-    return (
+
+
+      return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'145px'}}>
+            Transaction Details
+         </Typography>   
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "5% auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "0% auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",
@@ -65,39 +66,29 @@ export default function DetailPanel(props) {
                     alignItems: 'flex-start', // aligns items to the start of the flex container
 
                 }}
-            >
+            >           
                 <Box sx={{ flex: 1, textAlign: 'center', padding: 2, marginTop: 2, }}> {/* Flex 1 for equal width */}
                     <Typography variant="h5" gutterBottom>
-                        {props.custName} {props.lastName} 
+                        {props.firstName} {props.lastName} 
                     </Typography>
                     <Typography color="textSecondary">
-                    <span style={boldStyle}>Order ID:</span> {props.order_id}
+                    <span style={boldStyle}>Transaction ID:</span> {props.transaction_id}
+                    </Typography>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Customer ID:</span> {props.customer_id}
                     </Typography>
                 </Box>
-                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
+                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
                     <Typography variant="h6" gutterBottom>
-                        ORDER DETAILS
+                        ORDER INFORMATION
                     </Typography>
                     <Typography color="textSecondary">
-                    <span style={boldStyle}>Item Names:</span> {props.gender}
+                    <span style={boldStyle}>Date:</span> {props.transaction_date}
                     </Typography>
                     <Typography color="textSecondary">
-                    <span style={boldStyle}>Qty:</span> {props.dob}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Total:</span> {props.memberSince}
-                    </Typography>
-                    <Typography color="textSecondary">
-                    <span style={boldStyle}>Payment Method:</span> {props.phone}
-
+                    <span style={boldStyle}>Amount:</span> {props.amount}
                     </Typography>
                 </Box>
-                <Box sx={{ flex: 2, paddingLeft: 2, marginLeft: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                        SHIPPING ADDRESS
-                    </Typography>
-                    <Typography color="textSecondary">{props.address}</Typography>
-                 </Box>
             </Box>
         </ThemeProvider>
     );

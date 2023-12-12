@@ -16,108 +16,96 @@ import { columnsStateInitializer } from '@mui/x-data-grid/internals';
 
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function SuppliersPanel(props) {
-
+export default function DetailPanel(props) {
+    
     const boldStyle = { fontWeight: 'bold', color: 'black' };
 
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [totalOrder, setTotalOrder] = useState("");
-    const [completed, setCompleted] = useState("");
-    const [totalSales, setTotalSales] = useState("");
+    const [employee_date_hired, setEmployee_date_hired] = useState("");
+    const [manager_id, setManager_id] = useState("");
+    const [manager_branch_id, setManager_branch_id] = useState("");
+    const [isManager, setIsManager] = useState(false);
 
 
 
-    // i didnt add alot of thme as props but they still print so idk, ex : customer_id  
 
     useEffect(() => {
-        setName(props.custName);
-        setPhone(props.phone);
+        setFirstName(props.firstName);
+        setLastName(props.lastName);
         setEmail(props.email);
-        setAddress(props.address);
-    }, [props.custName, props.phone, props.email, props.address]);
+        setEmployee_date_hired(props.employee_date_hired);
+        setManager_id(props.manager_id);
+        setManager_branch_id(props.manager_branch_id);
+        setIsManager(props.isManager);
+      }, [props.firstName, props.lastName, props.email, props.employee_date_hired, props.manager_id, props.manager_branch_id, props.isManager]);
 
-    return (
+
+
+
+
+
+      return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '5vh', marginLeft:'145px'}}>
-            Supplier Details
+            Users Details
          </Typography>
             <Box
                 sx={{
                     background: "white",
                     width: "80%",
-                    margin: "0 auto 0", // centers the box with a top margin of 5% gang gang
+                    margin: "1% auto 0", // centers the box with a top margin of 5% gang gang
                     fontFamily: "Calibri",
                     border: "1px solid lightgrey",
                     borderRadius: "20px",
                     padding: 2,
-                    display: 'flex',
+                    display: 'flex', 
                     alignItems: 'center', // centers items vertically
                     alignItems: 'flex-start', // aligns items to the start of the flex container
 
                 }}
-            >
+            >                
                 <Box sx={{ flex: 1, textAlign: 'center', padding: 2, marginTop: 2, }}> {/* Flex 1 for equal width */}
                     <Typography variant="h5" gutterBottom>
-                        {props["name"]}
+                        {props.firstName} {props.lastName} 
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Supplier ID: </span> {props["id"]}
+                    <span style={boldStyle}>User ID:</span> {props.user_id}
                     </Typography>
                 </Box>
-                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5 }}> {/* Flex 2 for dbl wif */}
+                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey', paddingLeft: 5}}> {/* Flex 2 for dbl wif */}
                     <Typography variant="h6" gutterBottom>
-                        CONTACT INFORMATION
+                        EMPLOYEE INFORMATION
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Contact Number: </span> {props["number"]}
+                    <span style={boldStyle}>Email:</span> {props.email}
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Contact Email: </span> {props["email"]}
+                    <span style={boldStyle}>Date Hired:</span> {props.employee_date_hired}
                     </Typography>
-       
                 </Box>
                 <Box sx={{ flex: 2, paddingLeft: 2, marginLeft: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                        SHIPPING ADDRESS
-                    </Typography>
-                    <Typography color="textSecondary">{props["address"]}</Typography>
-                </Box>
-                <Box sx={{ flex: 2, borderLeft: '1px solid lightgrey', paddingLeft: 2, marginLeft: 2, }}>
-                    <Typography variant="h6" gutterBottom>
-                        SUPPLIER DETAILS
+                        EMPLOYEE STATUS 
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Shipments Received: </span> {props["received"]}
+                    <span style={boldStyle}>Manager:</span>  {isManager ? "Yes" : "No"}
                     </Typography>
                     <Typography color="textSecondary">
-                        <span style={boldStyle}>Average Delay (days): </span> {props["delay"]}
+                    <span style={boldStyle}>Manager ID:</span>  {props.manager_id}
                     </Typography>
-             
-                </Box>
+                    <Typography color="textSecondary">
+                    <span style={boldStyle}>Branch ID:</span>  {props.manager_branch_id}
+                    </Typography>
+                 </Box>
             </Box>
         </ThemeProvider>
     );
