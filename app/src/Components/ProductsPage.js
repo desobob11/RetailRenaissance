@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
@@ -11,7 +12,7 @@ import App, { get_columns, theme } from "../App";
 import Navbar from './Navbar';
 import "../styles.css";
 import Button from '@mui/material/Button';
-import { useNavigate, Link } from 'react-router-dom';
+
 
 
 
@@ -21,7 +22,9 @@ export default function Products() {
 
     useEffect(() => {
         if (productsRow.length === 0) {
+
            get_product_data();
+
         }
     }, [productsRow]);
 
@@ -86,10 +89,10 @@ export default function Products() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Navbar />
-
             <Grid className='background-grid' sx={{
                 alignContent: "center",
                 justifyContent: "center"
+
             }}>          
          <Typography align="right" marginRight="14vw" marginBottom={12}>
                     <Button component={Link} to="/addproduct" variant="contained" >
@@ -99,6 +102,7 @@ export default function Products() {
                 <Typography variant="h4" component="h2" gutterBottom style={{marginLeft:'0px', marginTop: "-11%",}}>
             Products Summary
          </Typography> 
+
                 <Box sx={{
                     width: "85%",
                     height: "60vh",
