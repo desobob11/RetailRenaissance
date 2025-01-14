@@ -42,29 +42,56 @@ By interacting with the web application, users trigger stored procedures in the 
 
 ## Getting Started
 
-The repository comes with two compiled executables:
-* **Main.exe** is a Windows executable compiled for x86_64 architecture. If your PC satisfies this requirement, run this executable!
-* **Main** is a Mac executable compiled for Intel's x86_64 chips. If your Mac satisfies this requirement, run this executable!
-* Compilation details can be found below
 
-### Prerequisites
+## Prerequisites
 
-* <a href="https://www.libsdl.org/"> SDL2 </a> (the required binaries and DLLs are included in the repo)
-* GCC, or on Windows, <a href="https://cygwin.com/"> Cygwin with mingw-64 is preferred </a>
+The following programs are required to run Retail Renaissance
 
-### Installation
+1. A web browser of your choice
+2. [Python](https://www.python.org/downloads/)
+3. [MySQL (including MySQL Workbench)](https://dev.mysql.com/downloads/workbench/)
+4. [Node.js](https://nodejs.org/en)
 
-This section is for compiling the program.
+## Installation
 
-**Windows**
-1. The **make.bat** can be used to compile your program using GCC, ocne your Cygwin installation has been configured.
-2. The template assumes that SDLDoom is installed in your C: directory. If this is not the case, please update any paths!
-3. The script will create the **Main.exe** executable.
+Begin by cloning this repository to your local machine.
 
-**Mac/Linux**
-1. A makefile has been included in the repo! Please execute if you would like to recompile the program.
-2. The makefile will create the **Main** executable.
+**MySQL**
+1. Ensure that a MySQL server is running on your machine
+2. Open MySQL workbench and navigate to the [Data Import wizard](https://dev.mysql.com/doc/workbench/en/wb-admin-export-import-management.html)
+3. Select the **rr_bootstrap** folder included in this repository
+4. The **rr** schema will not be built!
+5. In the **projectnode/sql** folder, execute each **.sql** script in the **rr** schema on **MySQL Workbench**
+6. All of the required stored procedures will be created!
 
+**Add Yourself as an Administrator**
+1. In **MySQL Workbench**, execute the following command to create an admin user:
+
+    `CALL add_user('root', 'root', 'root', 'root@root.ca', 1, 1);`
+
+**Populating the database**
+This project includes a Python script to populate the database with the help of [Faker](https://faker.readthedocs.io/en/master/).
+1. Execute **datafill.py**
+2. If the script fails to complete, please install each package shown in the error output using [Pip](https://pypi.org/project/pip/).
+
+**Launching the Node.js Server**
+1. Navigate to the **projectnode/server.js** and **projectnode/client.js** files
+2. Adjust the constant paramaters in each script to fit your MySQL configuration
+3. When ready to run the server, simply execute the following commands to install required **npm** packages and launch the server:
+
+    `npm install`
+    `node server.js`
+
+**Launching the React.js Frontend**
+1. Navigate to the **app** directory
+2. Execute the following commands to install all packages and start the frontend:
+
+    `npm install`
+    `node start`
+
+**Finish**
+
+You should now be greeted with the Login screen as your web browser boots up. Enter your user credentials and have fun!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -77,7 +104,10 @@ This section is for compiling the program.
 
 Desmond O'Brien -- desmondobrien01@outlook.com
 
-Project Link: [https://github.com/desobob11/SDLDoom](https://github.com/desobob11/SDLDoom)
+Victor Campos -- victor.goitia.campos@gmail.com 
+
+
+Project Link: [https://github.com/desobob11/RetailRenaissance](https://github.com/desobob11/RetailRenaissance)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
