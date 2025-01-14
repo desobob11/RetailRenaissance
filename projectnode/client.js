@@ -3,8 +3,8 @@ const sql = require('mysql2')
 
 const con = sql.createConnection({
     host: 'localhost',
-    user: 'dobrien',
-    password: 'abc*123',
+    user: 'root',
+    password: '123',
     database: 'rr'
 })
 
@@ -45,7 +45,7 @@ function call_sp(sp_name, param_string) {
     })
 }
 
-call_sp("request_login", "('desmond@rr.ca', 'abc123')");
+call_sp("request_login", "('root@rr.ca', '123')");
 //call_sp("user_summary", "()");
 
 

@@ -1,45 +1,30 @@
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE `CONTAINS`;
-TRUNCATE CUSTOMER;
-TRUNCATE EMPLOYEE;
-TRUNCATE MANAGER;
-TRUNCATE `ORDER`;
-TRUNCATE PRODUCT;
-TRUNCATE REQUIRES;
-TRUNCATE SHIPMENT;
-TRUNCATE STORE_BRANCH;
-TRUNCATE SUPPLIER;
-TRUNCATE SUPPLIES;
-TRUNCATE `TRANSACTION`;
-TRUNCATE `USER`;
-TRUNCATE WAREHOUSE;
-TRUNCATE WORKS_AT;
-SET FOREIGN_KEY_CHECKS = 1;
-
-
-CALL add_user ('Desmond', 'OBrien', 'abc*123', 'desmond@RR.ca', 1, 1)
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `add_user`(
-	IN fname TEXT(255),
-    IN lname TEXT(255),
-    IN psswrd TEXT(255),
-    IN eml TEXT(255),
-    IN isManager INT,
-    IN brnch_id INT
-    )
+CREATE PROCEDURE REPORTS_line_graph (prod_id INT)
 BEGIN
-INSERT INTO USER
-VALUES (default, fname, lname, psswrd, eml);
-
-SELECT @max_id := (SELECT MAX(user_id) FROM `USER`);
-
-
-INSERT INTO EMPLOYEE
-VALUES (@max_id, NOW());
-
-
-IF	isManager = 1
-	THEN INSERT INTO MANAGER VALUES (@max_id, default, brnch_id);
-END IF;
-END$$
+SET @first := MAKEDATE(YEAR(NOW()) - 1, 1);
+#SET @first := DATE_ADD(NOW(), INTERVAL -90 DAY);
+SET @last := DATE_ADD(NOW(), INTERVAL -90 DAY);
+SET @i := @first;
+CREATE TEMPORARY TABLE calendar (
+	dt DATE
+);
+WHILE @i <= @last DO
+	INSERT INTO calendar (dt) VALUES (@i);
+    SET @i := DATE_ADD(@i, INTERVAL 1 DAY);
+END WHILE;
+SELECT 
+	MONTH(c.dt) `Month`,
+	#DATE_FORMAT(c.dt, '%Y-%m-%d') `Transaction Date`,
+	SUM(r.num_prods) `Units Sold`
+FROM calendar c
+LEFT JOIN `TRANSACTION` T
+ON c.dt = T.transaction_date
+LEFT JOIN REQUIRES r
+ON r.transaction_id = T.transaction_id
+AND r.product_id = prod_id
+GROUP BY MONTH(c.dt)
+ORDER BY MONTH(c.dt);
+DROP TABLE calendar;
+END
+$$
 DELIMITER ;

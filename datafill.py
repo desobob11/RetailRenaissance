@@ -261,8 +261,8 @@ def main():
 
     db = msql.connect(
         host="localhost",
-        user="dobrien",
-        password="abc*123",
+        user="root",
+        password="123",
         database="rr"
     )
     curs = db.cursor()

@@ -88,12 +88,12 @@ export default function AddProduct() {
         fetch('http://127.0.0.1:8080/', options)
             .then(response => response.json())
             .then(result => {
-                if (parse_bool(result) === 1) {
+              //  if (parse_bool(result) === 1) {
                     alert("Success!");
-                }
-                else {
-                    alert("Failure, please check your inputs.")
-                }
+              //  }
+              //  else {
+                   // alert("Failure, please check your inputs.")
+               // }
             });
     };
 

@@ -8,7 +8,7 @@ import Navbar from './Navbar';
 import "../styles.css"
 import Table from '@mui/material/Table';
 import {LineChart} from '@mui/x-charts';
-
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, makeStyles, ThemeProvider } from '@mui/material/styles';
 import { TableBody, TableHead, TableRow, Box } from '@mui/material';
@@ -178,7 +178,6 @@ export default function Reports() {
                 '& .row-midQuantity': { color: '#FF9900' }, // light yellow
                 '& .row-lowQuantity': { color: '#BB0000' }, // light red
             }}>
-          
 
             <Grid item marginTop="2vh">
                 <DataGrid name="bestSelling"
